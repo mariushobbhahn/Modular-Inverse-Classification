@@ -249,13 +249,13 @@ def load_character_trajectories_cluster(pad_sequences=True,
     classes.extend(['o'] * (2249 - 2176))#o = 2248
     classes.extend(['p'] * (2310 - 2249))#p = 2309
     classes.extend(['q'] * (2364 - 2310))#q = 2363
-    classes.extend(['r'] * (2425 - 2364))#r = 2425
+    classes.extend(['r'] * (2426 - 2364))#r = 2425
     classes.extend(['s'] * (2495 - 2426))#s = 2494
-    classes.extend(['u'] * (2559 - 2495))#u = 2558
-    classes.extend(['v'] * (2640 - 2559))#v = 2639
-    classes.extend(['w'] * (2705 - 2640))#w = 2704
-    classes.extend(['y'] * (2775 - 2705))#y = 2774
-    classes.extend(['z'] * (2858 - 2775))#z = 2857
+    classes.extend(['u'] * (2558 - 2495))#u = 2558
+    classes.extend(['v'] * (2639 - 2558))#v = 2639
+    classes.extend(['w'] * (2704 - 2639))#w = 2704
+    classes.extend(['y'] * (2774 - 2704))#y = 2774
+    classes.extend(['z'] * (2857 - 2774))#z = 2857
 
 
     #these are all possible letters:
@@ -346,7 +346,7 @@ def load_character_trajectories_cluster(pad_sequences=True,
         #print("dict len: ", len(dictionary))
         #print("dict 0: ", np.shape(dictionary['a']))
         for i in range(num_cluster):
-            plot_sequence(index=i, sequences=dictionary['g'], swapaxis=True)
+            plot_sequence(index=i, sequences=dictionary['a'], swapaxis=True)
         all_data = dictionary
 
     else:
@@ -372,11 +372,11 @@ def load_character_trajectories_cluster(pad_sequences=True,
 if __name__ == '__main__':
 
     load_character_trajectories_cluster(num_classes=20,
-                                        num_cluster=2,
+                                        num_cluster=1,
                                         test_size=0,
                                         shuffle=False,
                                         clustering=True,
                                         centers_only=True,
-                                        filename='data/sequences_2_chars_per_class.npy',
+                                        filename='data/sequences_1_chars_per_class.npy',
                                         dictionary=True
                                         )

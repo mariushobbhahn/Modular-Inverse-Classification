@@ -36,7 +36,7 @@ class ModularRNN(nn.Module):
 
         params = list(gen_net.parameters())
         default_params  = params[0]
-        print("default params: ", default_params)
+        #print("default params: ", default_params)
 
         for i in range(iterations):
             #get the prediction of the generative network:
@@ -50,7 +50,7 @@ class ModularRNN(nn.Module):
             #print("inputs to lstm chunked: ", gen_net.lstm.weight_ih_l0.chunk(4, 0))
             params = list(gen_net.parameters())
             i_grads = params[0].grad.chunk(4, 0)[0]
-            print("gradients to lstm chunked: ", i_grads)
+            #print("gradients to lstm chunked: ", i_grads)
 
             #change inputs (does have no effect)
             #self.input[0] = self.input[0] + torch.sum(i_grads)
@@ -58,7 +58,8 @@ class ModularRNN(nn.Module):
 
             #change linear inpur parameters before LSTM temporarily
             lr = 0.1
-            updated_params = default_params + torch.cat((lr*i_grads, torch.zeros(30,1)), 0)
+            current_params = params[0]
+            updated_params = current_params + torch.cat((lr*i_grads, torch.zeros(30,1)), 0)
             gen_net.state_dict()['lstm.weight_ih_l0'].data.copy_(updated_params)
 
             #access gradients
@@ -75,15 +76,20 @@ class ModularRNN(nn.Module):
 
         return(diff)
 
-    def inverse_classification_all(self, target, iterations, list_of_networks):
+    def inverse_classification_all(self, target, iterations):
 
         loss_list = []
         #calculate loss between target and generative model for all networks
-        for net in list_of_networks:
+        for net in self.list_of_networks:
             loss_net = self.inverse_classification_rnn(gen_net=net, target=target, iterations=iterations)
             loss_list.append(loss_net)
 
         print("loss_list: ", loss_list)
 
         return(loss_list)
+
+
+
+
+
 
