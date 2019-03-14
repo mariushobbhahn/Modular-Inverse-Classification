@@ -111,10 +111,11 @@ if __name__ == '__main__':
 
     sequences_all = np.load('../data/sequences_all.npy')
 
-    model_name = '../RNN/weights/rnn_{}_10_noise_out00001_2c.pth'
-    #model_name = '../RNN/weights/rnn_{}_noise_in_0_noise_out_0_chars_1.pth'
+    #model_name = '../RNN/weights/rnn_{}_10_noise_out00001_2c.pth'
+    model_name = '../RNN/weights/rnn_types_{}_noise_in_0_noise_out_0_chars_1.pth'
     LoM = get_list_of_models(model_name=model_name,
-                             chars=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z']
+                             chars=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z'],
+                             input_dim=4
                              )
 
     test_classes = sequences_all[0]
@@ -129,7 +130,7 @@ if __name__ == '__main__':
     _,_ = inversely_classify_all_sequences(sequences=test_sequences_random,
                                            classes=test_classes_random,
                                            modular_RNN=modRNN,
-                                           iterations_per_ic=5
+                                           iterations_per_ic=50
                                            )
 
 

@@ -32,7 +32,7 @@ def plot_sequence(index, sequences, filename='char', title='', save=False, plot=
     if plot:
         plt.show()
     if save:
-        plt.savefig('../data/characters/{}'.format(filename))
+        plt.savefig(filename)
         plt.clf()
 
 
@@ -348,9 +348,10 @@ def load_character_trajectories_cluster(pad_sequences=True,
         for i in range(num_cluster):
             plot_sequence(index=i, sequences=dictionary['a'], swapaxis=True)
         all_data = dictionary
+        print(dictionary)
 
     else:
-        # since our data is ordered we need to split it in train and test split. Validation will be done by keras
+        # since our data is ordered we need to split it in train and test split with shuffle True.
         train_classes, test_classes, train_sequences, test_sequences = train_test_split(np.array(list_of_all_chars), sequences_final,
                                                                                         test_size=test_size,
                                                                                         shuffle=shuffle)

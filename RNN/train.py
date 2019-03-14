@@ -17,23 +17,23 @@ parser = argparse.ArgumentParser(
     description='Modular Inverse Classification Training With Pytorch')
 
 train_set = parser.add_mutually_exclusive_group()
-parser.add_argument('--num_epochs', default=10000,
+parser.add_argument('--num_epochs', default=40000,
                     type=int, help='number of epochs used for training')
 parser.add_argument('--hidden_size', default=10,
                     type=int, help='number of epochs used for training')
 parser.add_argument('--num_layers', default=1, type=int,
                     help='number of layers for the LSTM')
-parser.add_argument('--train_character', default='z', type=str,
+parser.add_argument('--train_character', default='b', type=str,
                     help='determines which character you train the generative model on')
 parser.add_argument('--noise_in', default=False, type=bool,
                     help='add noise to the first input')
-parser.add_argument('--noise_out', default=False, type=bool,
+parser.add_argument('--noise_out', default=True, type=bool,
                     help='add noise on the entire target')
 parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 #parser.add_argument('--weights_name', default='rnn_z_10_noise_out00001_2c', type=str,
 #                    help='filename for weights')
-parser.add_argument('--noise_size_input', default=0, type=float,
+parser.add_argument('--noise_size_input', default=0.2, type=float,
                      help='determines the standard deviation of the noise added to the input')
 parser.add_argument('--noise_size_target', default=0.0001, type=float,
                      help='determines the standard deviation of the noise added to the target')
@@ -56,7 +56,9 @@ def train_single(load_file,
                  output_dim,
                  num_layers,
                  input_dim,
-                 show_results=True):
+                 show_results=True,
+                 save_results=True
+                 ):
     """
     train a single model
 
@@ -64,16 +66,9 @@ def train_single(load_file,
     """
 
     print("weights name: ", weights_name)
-    sequences = np.load(load_file)
-    targets = sequences.item().get(str(character))
-    # plot_sequence(target, swapaxis=True, title="target")
-    targets = torch.Tensor(targets)
-
-    # 2 prepare input (output is target)
-    zeros = torch.zeros(205)
-    zeros[0] = 1
-    input_sequence = zeros.view((205, 1))
-    print("input_sequence: ", input_sequence.size())
+    data = np.load(load_file)
+    input_target_pairs = data.item().get(str(character))
+    zero_sequence = torch.zeros((205, input_dim))
 
     model = LSTMgen(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers)
     # hidden = model.init_hidden()
@@ -87,25 +82,25 @@ def train_single(load_file,
     for epoch in range(num_epochs):
 
         # prep data
-        input_sequence[0] = 1
-        if targets.size(0) > 1:   #randomly choose a target if trained on multiple sequences
-            rnd = np.random.randint(0,2)
-            target = targets[rnd]
-        else:
-            target = targets[0]
-        target = Variable(target, requires_grad=False)
+        #randomly choose a input-target pair if trained on types
+        rnd = np.random.randint(0, input_dim)
+        input = torch.Tensor(input_target_pairs[rnd][0])
+        input_sequence = zero_sequence
+        input_sequence[0] = input
+        target = torch.Tensor(input_target_pairs[rnd][1])
+
+        #add noise if specified
         if args.noise_in:
             m = normal.Normal(0.0, args.noise_size_input)
-            input_sequence[0] += m.sample()
+            input_sequence[0] += m.sample((input_dim, ))
+            input_sequence[0] = input_sequence[0].clamp(min=0, max=1)
         if args.noise_out:
             n = normal.Normal(0.0, args.noise_size_target)
             target += n.sample(sample_shape=(205,2))
         input_sequence = Variable(input_sequence, requires_grad=False)
-        #print("input_sequence[0]: ", input_sequence[0])
+        #print("input: ", input_sequence[0])
 
-
-
-
+        #optimize
         optimizer.zero_grad()
         out = model(input_sequence)
         loss = loss_function(out, target)
@@ -119,22 +114,28 @@ def train_single(load_file,
             current_best_weights = model.state_dict()
 
     torch.save(current_best_weights, 'weights/' + weights_name + '.pth')
-    if show_results:
+    if show_results or save_results:
         with torch.no_grad():
             # test the model
-            zeros = torch.zeros(len(target))
-            zeros[0] = 1
-            input_sequence = zeros.view((len(target), 1))
-            print("input: ", input_sequence)
-            model.load_state_dict(current_best_weights)
-            model.hidden = model.init_hidden()
-            pred = model(input_sequence).data.numpy()
-            print(type(pred))
-            print(np.shape(pred))
-            print("prediction: ", pred)
-            print("target: ", target.data.numpy())
-            plot_sequence(pred, swapaxis=True, title="test")
-            plot_sequence(target.data.numpy(), swapaxis=True, title="target")
+            zero_sequence = torch.zeros((205, input_dim))
+            #print("input: ", input_sequence)
+            for i in range(input_dim):
+                input = torch.Tensor(input_target_pairs[i][0])
+                input_sequence = zero_sequence
+                input_sequence[0] = input
+                target = torch.Tensor(input_target_pairs[i][1])
+                model.load_state_dict(current_best_weights)
+                model.hidden = model.init_hidden()
+                pred = model(input_sequence).data.numpy()
+                #print(type(pred))
+                #print(np.shape(pred))
+                #print("prediction: ", pred)
+                #print("target: ", target.data.numpy())
+                if save_results:
+                    plot_name = 'figures/' + weights_name + 'type_{}'.format(i) + '.png'
+                    print("saving plot of result at: ", plot_name)
+                plot_sequence(pred, swapaxis=True, title="test", show=show_results, save=save_results, filename=plot_name)
+                plot_sequence(target.data.numpy(), swapaxis=True, show=show_results, save=False, title="target")
 
 
 
@@ -146,7 +147,8 @@ def train_multiple(char_list,
                  output_dim,
                  num_layers,
                  input_dim,
-                 show_results=True):
+                 show_results=True,
+                 save_results=True):
 
     for char in char_list:
         weights_name_f = weights_name.format(char)
@@ -158,7 +160,9 @@ def train_multiple(char_list,
                  output_dim=output_dim,
                  num_layers=num_layers,
                  input_dim=input_dim,
-                 show_results=False)
+                 show_results=show_results,
+                 save_results=save_results
+                 )
 
     print("Done training models for: ", char_list)
 
@@ -166,33 +170,36 @@ def train_multiple(char_list,
 if __name__ == '__main__':
 
 
+    WEIGHTS_NAME = str('rnn_types_{}_'  +   #.format(args.train_character) + '_' +
+                       'noise_in_{size}_'.format(size=str(args.noise_size_input) if args.noise_in else "0") +
+                       'noise_out_{size}_'.format(size=str(args.noise_size_target) if args.noise_out else "0") +
+                       'chars_{}'.format(args.num_chars_per_class)
+                        )
 
     """
-    train_single(load_file='../data/sequences_2_chars_per_class.npy',
+    train_single(load_file='../data/sequences_4_handpicked.npy',
                  weights_name=WEIGHTS_NAME,
                  character=args.train_character,
                  num_epochs=args.num_epochs,
                  hidden_size=args.hidden_size,
                  output_dim=2,
                  num_layers=args.num_layers,
-                 input_dim=1,
+                 input_dim=4,
                  show_results=True)
-    """
+    #"""
 
-    WEIGHTS_NAME = str('rnn_' + '{}' + '_' +
-                       'noise_in_{size}_'.format(size=str(args.noise_size_input) if args.noise_in else "0") +
-                       'noise_out_{size}_'.format(size=str(args.noise_size_target) if args.noise_out else "0") +
-                       'chars_{}'.format(args.num_chars_per_class)
-                        )
 
-    train_multiple(load_file='../data/sequences_1_chars_per_class.npy',    #'../data/sequences_2_chars_per_class.npy',
+    #"""
+    train_multiple(load_file='../data/sequences_4_handpicked.npy',    #'../data/sequences_2_chars_per_class.npy',
                  char_list=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z'],
                  weights_name=WEIGHTS_NAME,
                  num_epochs=args.num_epochs,
                  hidden_size=args.hidden_size,
                  output_dim=2,
                  num_layers=args.num_layers,
-                 input_dim=1,
-                 show_results=True)
-
+                 input_dim=4,
+                 show_results=False,
+                 save_results=True
+                 )
+    #"""
 

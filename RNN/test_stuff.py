@@ -7,58 +7,65 @@ import numpy as np
 
 from generative_RNN import LSTMgen
 from modular_RNN import ModularRNN
+#from Inverse_classification.inverse_classification import get_list_of_models #fucking imports in python
 from utils import plot_sequence
+
+def get_list_of_models(model_name, chars, input_dim=1, hidden_size=10, output_dim=2, num_layers=1):
+    """
+    returns a list of trained models where all have the same weight name
+    except for the specified character.
+
+    :param model_name: string with {} at the place where the letter is to be inserted
+    :param chars: list of characters for which the model should be loaded
+    :return: list of loaded models
+    """
+
+    LoM = []
+    for c in chars:
+        weights_name = model_name.format(c)
+        model = LSTMgen(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers)
+        checkpoint = torch.load(weights_name)
+        model.load_state_dict(checkpoint)
+        LoM.append(model)
+
+    return (LoM)
+
 
 if __name__ == '__main__':
 
-    sequences = np.load('../data/sequences.npy')
-    sequences_all = np.load('../data/sequences_all.npy')
 
-    train_classes = sequences_all[0]
-    train_sequences = sequences_all[1]
+    #load_file = '../data/sequences_4_handpicked.npy'
+    load_file = '../data/sequences_all.npy'
+    model_name = '../RNN/weights/rnn_types_{}_noise_in_0.1_noise_out_0_chars_1.pth'
 
-    index = 0
-    print("train_classes[index]: ", train_classes[index])
-    test_target = train_sequences[index]
-    plot_sequence(test_target, title='test_target', swapaxis=True)
-    test_target = torch.Tensor(test_target)
+    data = np.load(load_file)
+    classes, sequences = data[0], data[1]
+    print(np.shape(classes), np.shape(sequences))
+    character = 'a'
+    #input_target_pairs = data.item().get(str(character))
+    #zero_sequence = torch.zeros((205, 4))
 
-    # plot_sequence(target, swapaxis=True, title="target")
-    target_a = sequences.item().get('a')
-    target_b = sequences.item().get('b')
-    target_c = sequences.item().get('c')
-    target_d = sequences.item().get('d')
-    target_e = sequences.item().get('e')
-    target_a = torch.Tensor(target_a)
-    target_b = torch.Tensor(target_b)
-    target_c = torch.Tensor(target_c)
-    target_d = torch.Tensor(target_d)
-    target_e = torch.Tensor(target_e)
+    model = LSTMgen(input_dim=4, hidden_size=10, output_dim=2, num_layers=1)
+    #checkpoint = torch.load(model_name)
+    #model.load_state_dict(checkpoint)
+
+    LoM = get_list_of_models(model_name=model_name,
+                             chars=['a'],
+                             input_dim=4
+                             )
+
+    number = 3      #denotes the number of the types: int from 0 to 3
+    #input = torch.Tensor(input_target_pairs[number][0])
+    #input_sequence = zero_sequence
+    #input_sequence[0] = input
+
+    #target = torch.Tensor(input_target_pairs[number][1])
+    target = torch.Tensor(sequences[2])
+
+    modRNN = ModularRNN(list_of_networks=LoM)
+
+    modRNN.inverse_classification_rnn(gen_net=LoM[0], target=target ,iterations=100)
 
 
-    model_a = LSTMgen(input_dim=1, hidden_size=10, output_dim=2, num_layers=1)
-    checkpoint_a = torch.load("weights/rnn_a_10_noise_out00001_2c.pth")
-    model_a.load_state_dict(checkpoint_a)
-    print("parameters: ", model_a.parameters)
 
-    model_b = LSTMgen(input_dim=1, hidden_size=10, output_dim=2, num_layers=1)
-    checkpoint_b = torch.load("weights/rnn_b_10_noise_out00001_2c.pth")
-    model_b.load_state_dict(checkpoint_b)
 
-    model_c = LSTMgen(input_dim=1, hidden_size=10, output_dim=2, num_layers=1)
-    checkpoint_c = torch.load("weights/rnn_c_10_noise_out00001_2c.pth")
-    model_c.load_state_dict(checkpoint_c)
-
-    model_d = LSTMgen(input_dim=1, hidden_size=10, output_dim=2, num_layers=1)
-    checkpoint_d = torch.load("weights/rnn_d_10_noise_out00001_2c.pth")
-    model_d.load_state_dict(checkpoint_d)
-
-    model_e = LSTMgen(input_dim=1, hidden_size=10, output_dim=2, num_layers=1)
-    checkpoint_e = torch.load("weights/rnn_e_10_noise_out00001_2c.pth")
-    model_e.load_state_dict(checkpoint_e)
-
-    LoN = [model_a, model_b, model_c, model_d, model_e]
-
-    modularRNN = ModularRNN(list_of_networks = LoN)
-
-    modularRNN.inverse_classification_all(list_of_networks=LoN, target=test_target, iterations=0)
