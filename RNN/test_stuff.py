@@ -34,15 +34,15 @@ def get_list_of_models(model_name, chars, input_dim=1, hidden_size=10, output_di
 if __name__ == '__main__':
 
 
-    #load_file = '../data/sequences_4_handpicked.npy'
-    load_file = '../data/sequences_all.npy'
+    load_file = '../data/sequences_4_handpicked.npy'
+    #load_file = '../data/sequences_all.npy'
     model_name = '../RNN/weights/rnn_types_{}_noise_in_0.1_noise_out_0_chars_1.pth'
 
     data = np.load(load_file)
-    classes, sequences = data[0], data[1]
-    print(np.shape(classes), np.shape(sequences))
-    character = 'a'
-    #input_target_pairs = data.item().get(str(character))
+    #classes, sequences = data[0], data[1]
+    #print(np.shape(classes), np.shape(sequences))
+    character = 'b'
+    input_target_pairs = data.item().get(str(character))
     #zero_sequence = torch.zeros((205, 4))
 
     model = LSTMgen(input_dim=4, hidden_size=10, output_dim=2, num_layers=1)
@@ -50,21 +50,25 @@ if __name__ == '__main__':
     #model.load_state_dict(checkpoint)
 
     LoM = get_list_of_models(model_name=model_name,
-                             chars=['a'],
+                             chars=['b'],
                              input_dim=4
                              )
 
-    number = 3      #denotes the number of the types: int from 0 to 3
+    #number = 3      #denotes the number of the types: int from 0 to 3
     #input = torch.Tensor(input_target_pairs[number][0])
     #input_sequence = zero_sequence
     #input_sequence[0] = input
 
-    #target = torch.Tensor(input_target_pairs[number][1])
-    target = torch.Tensor(sequences[2])
 
-    modRNN = ModularRNN(list_of_networks=LoM)
+    for number in range(4):
+        target = torch.Tensor(input_target_pairs[number][1])
 
-    modRNN.inverse_classification_rnn(gen_net=LoM[0], target=target ,iterations=100)
+    #for j in range(200):
+    #    target = torch.Tensor(sequences[i])
+
+        modRNN = ModularRNN(list_of_networks=LoM)
+
+        modRNN.inverse_classification_rnn(gen_net=LoM[0], target=target ,iterations=100)
 
 
 

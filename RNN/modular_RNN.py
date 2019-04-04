@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.autograd import Variable
-from utils import plot_sequence
+from utils import plot_sequence, plot_pred_target
 from torch.distributions import uniform
 import numpy as np
 
@@ -18,7 +18,7 @@ class ModularRNN(nn.Module):
         self.loss_function = loss_function
 
 
-    def inverse_classification_rnn(self, gen_net, target, iterations, plot_results=True):
+    def inverse_classification_rnn(self, gen_net, target, iterations, save_plot, show_plot, filename='not_specified.png', verbose=True):
         """
         takes a target sequence as input and returns the difference between
         first layer activations after backpropagating the target.
@@ -54,11 +54,12 @@ class ModularRNN(nn.Module):
         # get sequence to start generative model
         zero_sequence = torch.zeros((205, self.input_dim))
         input_sequence = zero_sequence
-        # uniform_vector = torch.tensor([1/input_dim] * input_dim)
-        # input_sequence[0] = uniform_vector
-        m = uniform.Uniform(0, 0.5)
+        #uniform_vector = torch.tensor([1/self.input_dim] * self.input_dim)
+        #input_sequence[0] = uniform_vector
+        m = uniform.Uniform(0.245, 0.255)
         uniform_sample = m.sample((self.input_dim,))
-        print("new uniform sample: ", uniform_sample)
+        if verbose:
+            print("new uniform sample: ", uniform_sample)
         input_sequence[0] = uniform_sample
         self.input = input_sequence
 
@@ -71,7 +72,7 @@ class ModularRNN(nn.Module):
             self.input[0] = self.input[0].clamp(min=0, max=1)
             self.input[0] = self.input[0] / torch.sum(self.input[0])
             self.input = torch.autograd.Variable(self.input, requires_grad=True)
-            print("self.input: ", self.input[0])
+
 
 
             #get the prediction of the generative network:
@@ -79,30 +80,18 @@ class ModularRNN(nn.Module):
             #plot_sequence(target.detach().numpy(), "target", swapaxis=True)
             #plot_sequence(out.detach().numpy(), "test", swapaxis=True)
             loss = self.loss_function(out, target)
-            print('loss: ', loss)
+            if verbose:
+                print("self.input: ", self.input[0])
+                print('loss: ', loss)
 
             #propagate the loss back
             loss.backward()
 
             input_gradient = self.input.grad[0]
-            print("input_gradient: ", input_gradient)
-
-            #print("inputs to lstm: ", gen_net.lstm.weight_ih_l0)
-            #print("inputs to lstm chunked: ", gen_net.lstm.weight_ih_l0.chunk(4, 0))
-            params = list(gen_net.parameters())
-            #for param in params:
-            #    print("param: ", param.size())
-            #i_grads = params[0].grad.chunk(4, 0)[0]
-            #print("params[0].grad(): ", params[0].grad)
-            #print("gradients to lstm chunked: ", i_grads.size())
-
-            #""" #this is the version where the inputs are changed not the gradients
-            #print("i_grads: ", i_grads)
-            #change_values = torch.sum(i_grads, dim=0)
-            #print("change_values: ", change_values)
+            #print("input_gradient: ", input_gradient)
 
             #add it on the input
-            lr = 0.01
+            lr = 0.05
             #self.input[0] = self.input[0] + lr * input_gradient
             self.input[0], m_t1, v_t1 = adam_optimizer_step(input_vector=self.input[0], gradient_vector=input_gradient,
                                                         eta=lr, m_t1=m_t1, v_t1=v_t1)
@@ -125,21 +114,28 @@ class ModularRNN(nn.Module):
             #     print("gradient sizes: ", p.grad.size())
             #     print("name of the parameter: ", p.name)
 
-        if plot_results:
+        if save_plot or show_plot:
+            pred = gen_net(self.input).detach().numpy()
+            plot_target = target.detach().numpy()
+            """
             print("plot result")
-            plot_sequence(gen_net(self.input).detach().numpy(), swapaxis=True, title='prediction after gradient iteration')
+            plot_sequence(pred, swapaxis=True, title='prediction after gradient iteration')
             print("plot target")
-            plot_sequence(target.detach().numpy(), swapaxis=True, title='target')
-        diff = self.loss_function(gen_net(self.input), target)
+            plot_sequence(target, swapaxis=True, title='target')
+            """
+            plot_pred_target(pred, plot_target, filename=filename, save=save_plot, show=show_plot)
+        diff = self.loss_function(gen_net(self.input), target).detach().numpy()
+        pred_class = self.input[0].clamp(min=0, max=1)
+        pred_class = pred_class.detach().numpy() / torch.sum(pred_class).detach().numpy()
 
-        return(diff)
+        return(diff, pred_class)
 
     def inverse_classification_all(self, target, iterations):
 
         loss_list = []
         #calculate loss between target and generative model for all networks
         for net in self.list_of_networks:
-            loss_net = self.inverse_classification_rnn(gen_net=net, target=target, iterations=iterations)
+            loss_net, _ = self.inverse_classification_rnn(gen_net=net, target=target, iterations=iterations, save_plot=False, show_plot=False, verbose=False)
             loss_list.append(loss_net)
 
         print("loss_list: ", loss_list)

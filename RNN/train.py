@@ -33,9 +33,9 @@ parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 #parser.add_argument('--weights_name', default='rnn_z_10_noise_out00001_2c', type=str,
 #                    help='filename for weights')
-parser.add_argument('--noise_size_input', default=0.2, type=float,
+parser.add_argument('--noise_size_input', default=0.05, type=float,
                      help='determines the standard deviation of the noise added to the input')
-parser.add_argument('--noise_size_target', default=0.0001, type=float,
+parser.add_argument('--noise_size_target', default=0.0003, type=float,
                      help='determines the standard deviation of the noise added to the target')
 parser.add_argument('--num_chars_per_class', default=1, type=int,
                     help='determines the number of characters that a generative network was trained on')

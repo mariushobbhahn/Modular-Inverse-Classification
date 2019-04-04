@@ -345,8 +345,8 @@ def load_character_trajectories_cluster(pad_sequences=True,
         # plot_sequence(index=0, sequences=[dictionary['b']], swapaxis=True)
         #print("dict len: ", len(dictionary))
         #print("dict 0: ", np.shape(dictionary['a']))
-        for i in range(num_cluster):
-            plot_sequence(index=i, sequences=dictionary['a'], swapaxis=True)
+        #for i in range(num_cluster):
+        #    plot_sequence(index=i, sequences=dictionary['a'], swapaxis=True)
         all_data = dictionary
         print(dictionary)
 
@@ -373,11 +373,11 @@ def load_character_trajectories_cluster(pad_sequences=True,
 if __name__ == '__main__':
 
     load_character_trajectories_cluster(num_classes=20,
-                                        num_cluster=1,
+                                        num_cluster=20,
                                         test_size=0,
                                         shuffle=False,
                                         clustering=True,
                                         centers_only=True,
-                                        filename='data/sequences_1_chars_per_class.npy',
+                                        filename='data/sequences_20_chars_per_class.npy',
                                         dictionary=True
                                         )

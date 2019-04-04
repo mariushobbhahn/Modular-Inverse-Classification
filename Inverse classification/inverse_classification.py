@@ -112,7 +112,7 @@ if __name__ == '__main__':
     sequences_all = np.load('../data/sequences_all.npy')
 
     #model_name = '../RNN/weights/rnn_{}_10_noise_out00001_2c.pth'
-    model_name = '../RNN/weights/rnn_types_{}_noise_in_0_noise_out_0_chars_1.pth'
+    model_name = '../RNN/weights/rnn_types_{}_noise_in_0.2_noise_out_0_chars_1.pth'
     LoM = get_list_of_models(model_name=model_name,
                              chars=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z'],
                              input_dim=4
@@ -135,196 +135,145 @@ if __name__ == '__main__':
 
 
 
-
-"""
-
-rnn_{}_noise_in_0_noise_out_0_chars_1.pth', iterations_per_ic=10
-
-overall loss:  tensor(0.4439, grad_fn=<DivBackward0>)
-loss for character:  a tensor(0.2376, grad_fn=<DivBackward0>)
-loss for character:  b tensor(0.0621, grad_fn=<DivBackward0>)
-loss for character:  c tensor(0.0543, grad_fn=<DivBackward0>)
-loss for character:  d tensor(0.9318, grad_fn=<DivBackward0>)
-loss for character:  e tensor(0.4055, grad_fn=<DivBackward0>)
-loss for character:  g tensor(0.7436, grad_fn=<DivBackward0>)
-loss for character:  h tensor(0.4270, grad_fn=<DivBackward0>)
-loss for character:  l tensor(0.3045, grad_fn=<DivBackward0>)
-loss for character:  m tensor(0.8862, grad_fn=<DivBackward0>)
-loss for character:  n tensor(0.5312, grad_fn=<DivBackward0>)
-loss for character:  o tensor(0.1421, grad_fn=<DivBackward0>)
-loss for character:  p tensor(0.1976, grad_fn=<DivBackward0>)
-loss for character:  q tensor(0.0884, grad_fn=<DivBackward0>)
-loss for character:  r tensor(0.3062, grad_fn=<DivBackward0>)
-loss for character:  s tensor(0.4040, grad_fn=<DivBackward0>)
-loss for character:  u tensor(0.4884, grad_fn=<DivBackward0>)
-loss for character:  v tensor(0.3033, grad_fn=<DivBackward0>)
-loss for character:  w tensor(0.4670, grad_fn=<DivBackward0>)
-loss for character:  y tensor(1.3835, grad_fn=<DivBackward0>)
-loss for character:  z tensor(0.5427, grad_fn=<DivBackward0>)
-overall accuracy:  0.425
-accuracy for character:  a 0.07692307692307693
-accuracy for character:  b 1.0
-accuracy for character:  c 1.0
-accuracy for character:  d 0.1
-accuracy for character:  e 0.0
-accuracy for character:  g 0.0
-accuracy for character:  h 0.625
-accuracy for character:  l 0.09090909090909091
-accuracy for character:  m 0.125
-accuracy for character:  n 0.0
-accuracy for character:  o 0.8181818181818182
-accuracy for character:  p 1.0
-accuracy for character:  q 1.0
-accuracy for character:  r 0.5714285714285714
-accuracy for character:  s 1.0
-accuracy for character:  u 0.0
-accuracy for character:  v 0.36363636363636365
-accuracy for character:  w 0.09090909090909091
-accuracy for character:  y 0.375
-accuracy for character:  z 0.8571428571428571
-
-"""
-
-"""
-
-#rnn_{}_noise_in_0_noise_out_0_chars_1.pth', iterations_per_ic=1
-
-overall loss:  tensor(0.3485, grad_fn=<DivBackward0>)
-loss for character:  a tensor(0.0311, grad_fn=<DivBackward0>)
-loss for character:  b tensor(0.2382, grad_fn=<DivBackward0>)
-loss for character:  c tensor(0.0346, grad_fn=<DivBackward0>)
-loss for character:  d tensor(0.5731, grad_fn=<DivBackward0>)
-loss for character:  e tensor(0.2910, grad_fn=<DivBackward0>)
-loss for character:  g tensor(0.4403, grad_fn=<DivBackward0>)
-loss for character:  h tensor(0.2018, grad_fn=<DivBackward0>)
-loss for character:  l tensor(0.3073, grad_fn=<DivBackward0>)
-loss for character:  m tensor(0.6828, grad_fn=<DivBackward0>)
-loss for character:  n tensor(0.4689, grad_fn=<DivBackward0>)
-loss for character:  o tensor(0.1433, grad_fn=<DivBackward0>)
-loss for character:  p tensor(0.1266, grad_fn=<DivBackward0>)
-loss for character:  q tensor(0.1639, grad_fn=<DivBackward0>)
-loss for character:  r tensor(0.0979, grad_fn=<DivBackward0>)
-loss for character:  s tensor(0.2075, grad_fn=<DivBackward0>)
-loss for character:  u tensor(0.3152, grad_fn=<DivBackward0>)
-loss for character:  v tensor(0.2290, grad_fn=<DivBackward0>)
-loss for character:  w tensor(0.2797, grad_fn=<DivBackward0>)
-loss for character:  y tensor(1.0965, grad_fn=<DivBackward0>)
-loss for character:  z tensor(0.4146, grad_fn=<DivBackward0>)
-overall accuracy:  0.625
-accuracy for character:  a 1.0
-accuracy for character:  b 0.8333333333333334
-accuracy for character:  c 1.0
-accuracy for character:  d 0.3076923076923077
-accuracy for character:  e 0.7083333333333334
-accuracy for character:  g 0.7142857142857143
-accuracy for character:  h 0.8333333333333334
-accuracy for character:  l 0.7777777777777778
-accuracy for character:  m 0.2
-accuracy for character:  n 0.0
-accuracy for character:  o 0.6923076923076923
-accuracy for character:  p 0.75
-accuracy for character:  q 0.9090909090909091
-accuracy for character:  r 1.0
-accuracy for character:  s 1.0
-accuracy for character:  u 0.06666666666666667
-accuracy for character:  v 0.8
-accuracy for character:  w 0.8
-accuracy for character:  y 0.2222222222222222
-accuracy for character:  z 0.7777777777777778
-"""
-
-
 """
 
 #rnn_{}_noise_in_0_noise_out_0_chars_1.pth', iterations_per_ic=0
 
-overall loss:  tensor(0.1232, grad_fn=<DivBackward0>)
-loss for character:  a tensor(0.0411, grad_fn=<DivBackward0>)
-loss for character:  b tensor(0.0519, grad_fn=<DivBackward0>)
-loss for character:  c tensor(0.0550, grad_fn=<DivBackward0>)
-loss for character:  d tensor(0.1153, grad_fn=<DivBackward0>)
-loss for character:  e tensor(0.0975, grad_fn=<DivBackward0>)
-loss for character:  g tensor(0.1415, grad_fn=<DivBackward0>)
-loss for character:  h tensor(0.1391, grad_fn=<DivBackward0>)
-loss for character:  l tensor(0.1277, grad_fn=<DivBackward0>)
-loss for character:  m tensor(0.1899, grad_fn=<DivBackward0>)
-loss for character:  n tensor(0.1690, grad_fn=<DivBackward0>)
-loss for character:  o tensor(0.1578, grad_fn=<DivBackward0>)
-loss for character:  p tensor(0.0599, grad_fn=<DivBackward0>)
-loss for character:  q tensor(0.1430, grad_fn=<DivBackward0>)
-loss for character:  r tensor(0.0744, grad_fn=<DivBackward0>)
-loss for character:  s tensor(0.0507, grad_fn=<DivBackward0>)
-loss for character:  u tensor(0.0677, grad_fn=<DivBackward0>)
-loss for character:  v tensor(0.1329, grad_fn=<DivBackward0>)
-loss for character:  w tensor(0.1643, grad_fn=<DivBackward0>)
-loss for character:  y tensor(0.2689, grad_fn=<DivBackward0>)
-loss for character:  z tensor(0.2232, grad_fn=<DivBackward0>)
-overall accuracy:  0.8792439621981099
-accuracy for character:  a 0.9941520467836257
-accuracy for character:  b 0.9929078014184397
-accuracy for character:  c 0.9225352112676056
-accuracy for character:  d 0.9554140127388535
-accuracy for character:  e 0.9731182795698925
-accuracy for character:  g 0.8695652173913043
-accuracy for character:  h 0.8818897637795275
-accuracy for character:  l 0.7011494252873564
-accuracy for character:  m 0.856
-accuracy for character:  n 0.6461538461538462
-accuracy for character:  o 0.6453900709219859
-accuracy for character:  p 0.9618320610687023
-accuracy for character:  q 0.9193548387096774
-accuracy for character:  r 0.8559322033898306
-accuracy for character:  s 0.9774436090225563
-accuracy for character:  u 0.9007633587786259
-accuracy for character:  v 0.9161290322580645
-accuracy for character:  w 0.664
-accuracy for character:  y 0.9124087591240876
-accuracy for character:  z 0.9649122807017544
+overall loss:  0.1364216336733807
+loss for character:  a 0.07021037873346359
+loss for character:  b 0.07821024092845619
+loss for character:  c 0.07291616800312813
+loss for character:  d 0.17424756164352098
+loss for character:  e 0.06069928083282624
+loss for character:  g 0.2733142889208264
+loss for character:  h 0.10692455135285854
+loss for character:  l 0.08513871906325221
+loss for character:  m 0.31845334817965826
+loss for character:  n 0.0884380762775739
+loss for character:  o 0.1965368628501892
+loss for character:  p 0.04862734992057085
+loss for character:  q 0.09187156340340152
+loss for character:  r 0.04510198533535004
+loss for character:  s 0.05648152243035535
+loss for character:  u 0.054800479171367794
+loss for character:  v 0.08634670058058368
+loss for character:  w 0.12131315576178688
+loss for character:  y 0.3071092309223281
+loss for character:  z 0.20609313187499842
+overall accuracy:  0.775
+accuracy for character:  a 1.0
+accuracy for character:  b 1.0
+accuracy for character:  c 0.6923076923076923
+accuracy for character:  d 1.0
+accuracy for character:  e 1.0
+accuracy for character:  g 0.4444444444444444
+accuracy for character:  h 0.7
+accuracy for character:  l 0.625
+accuracy for character:  m 0.7333333333333333
+accuracy for character:  n 0.6666666666666666
+accuracy for character:  o 0.2
+accuracy for character:  p 1.0
+accuracy for character:  q 0.875
+accuracy for character:  r 1.0
+accuracy for character:  s 1.0
+accuracy for character:  u 0.9230769230769231
+accuracy for character:  v 0.5555555555555556
+accuracy for character:  w 0.42857142857142855
+accuracy for character:  y 0.8888888888888888
+accuracy for character:  z 0.7222222222222222
 """
 
 """
-#rnn_{}_10_noise_out00001_2c.pth, iterations_ic=0
 
-overall loss:  tensor(0.1318, grad_fn=<DivBackward0>)
-loss for character:  a tensor(0.0447, grad_fn=<DivBackward0>)
-loss for character:  b tensor(0.0575, grad_fn=<DivBackward0>)
-loss for character:  c tensor(0.0557, grad_fn=<DivBackward0>)
-loss for character:  d tensor(0.1202, grad_fn=<DivBackward0>)
-loss for character:  e tensor(0.0990, grad_fn=<DivBackward0>)
-loss for character:  g tensor(0.1457, grad_fn=<DivBackward0>)
-loss for character:  h tensor(0.1380, grad_fn=<DivBackward0>)
-loss for character:  l tensor(0.1300, grad_fn=<DivBackward0>)
-loss for character:  m tensor(0.2037, grad_fn=<DivBackward0>)
-loss for character:  n tensor(0.1828, grad_fn=<DivBackward0>)
-loss for character:  o tensor(0.1929, grad_fn=<DivBackward0>)
-loss for character:  p tensor(0.0616, grad_fn=<DivBackward0>)
-loss for character:  q tensor(0.1650, grad_fn=<DivBackward0>)
-loss for character:  r tensor(0.0747, grad_fn=<DivBackward0>)
-loss for character:  s tensor(0.0523, grad_fn=<DivBackward0>)
-loss for character:  u tensor(0.0790, grad_fn=<DivBackward0>)
-loss for character:  v tensor(0.1414, grad_fn=<DivBackward0>)
-loss for character:  w tensor(0.1963, grad_fn=<DivBackward0>)
-loss for character:  y tensor(0.2801, grad_fn=<DivBackward0>)
-loss for character:  z tensor(0.2311, grad_fn=<DivBackward0>)
-overall accuracy:  0.8305915295764789
-accuracy for character:  a 0.9883040935672515
-accuracy for character:  b 0.9929078014184397
-accuracy for character:  c 0.8802816901408451
-accuracy for character:  d 0.9554140127388535
-accuracy for character:  e 0.967741935483871
-accuracy for character:  g 0.8115942028985508
-accuracy for character:  h 0.8188976377952756
-accuracy for character:  l 0.6954022988505747
-accuracy for character:  m 0.632
-accuracy for character:  n 0.676923076923077
-accuracy for character:  o 0.45390070921985815
-accuracy for character:  p 0.9618320610687023
-accuracy for character:  q 0.9516129032258065
-accuracy for character:  r 0.8389830508474576
-accuracy for character:  s 0.9774436090225563
-accuracy for character:  u 0.8473282442748091
-accuracy for character:  v 0.6258064516129033
-accuracy for character:  w 0.584
-accuracy for character:  y 0.927007299270073
-accuracy for character:  z 0.935672514619883
+model_name = '../RNN/weights/rnn_types_{}_noise_in_0.1_noise_out_0_chars_1.pth'
+
+overall loss:  0.09452036403345118
+loss for character:  a 0.039771830753630236
+loss for character:  b 0.028846671293851815
+loss for character:  c 0.050183663098141554
+loss for character:  d 0.05708870374863701
+loss for character:  e 0.0632401327136904
+loss for character:  g 0.14576795417815447
+loss for character:  h 0.05416293192485517
+loss for character:  l 0.06061251829669345
+loss for character:  m 0.20974740386009216
+loss for character:  n 0.07756220282317372
+loss for character:  o 0.10067061486188322
+loss for character:  p 0.07649109613460799
+loss for character:  q 0.2074287554456128
+loss for character:  r 0.052675666908423104
+loss for character:  s 0.036874350012195384
+loss for character:  u 0.05724466759711504
+loss for character:  v 0.1097097190347715
+loss for character:  w 0.11060300448702441
+loss for character:  y 0.1538952199875244
+loss for character:  z 0.22998151422611304
+overall accuracy:  0.885
+accuracy for character:  a 0.8888888888888888
+accuracy for character:  b 1.0
+accuracy for character:  c 1.0
+accuracy for character:  d 1.0
+accuracy for character:  e 0.9
+accuracy for character:  g 1.0
+accuracy for character:  h 0.9090909090909091
+accuracy for character:  l 0.9090909090909091
+accuracy for character:  m 1.0
+accuracy for character:  n 0.875
+accuracy for character:  o 0.625
+accuracy for character:  p 0.8333333333333334
+accuracy for character:  q 0.8888888888888888
+accuracy for character:  r 1.0
+accuracy for character:  s 1.0
+accuracy for character:  u 1.0
+accuracy for character:  v 0.6153846153846154
+accuracy for character:  w 0.6666666666666666
+accuracy for character:  y 0.9285714285714286
+accuracy for character:  z 0.7857142857142857
+"""
+
+"""
+model_name = '../RNN/weights/rnn_types_{}_noise_in_0.2_noise_out_0_chars_1.pth'
+
+overall loss:  0.1009666990597907
+loss for character:  a 0.04940825385543016
+loss for character:  b 0.047519674317704305
+loss for character:  c 0.056827050323287644
+loss for character:  d 0.09314793888479471
+loss for character:  e 0.046022218150588184
+loss for character:  g 0.09932621195912361
+loss for character:  h 0.10568072157911956
+loss for character:  l 0.0549586463926567
+loss for character:  m 0.08069473792177935
+loss for character:  n 0.08550719047586124
+loss for character:  o 0.06646208489213937
+loss for character:  p 0.044514232522083655
+loss for character:  q 0.12276475727558137
+loss for character:  r 0.03294102359879097
+loss for character:  s 0.02584048085069905
+loss for character:  u 0.055799058431552515
+loss for character:  v 0.1311474971783658
+loss for character:  w 0.13088178945084414
+loss for character:  y 0.35517056773488337
+loss for character:  z 0.24379178324791914
+overall accuracy:  0.855
+accuracy for character:  a 0.8461538461538461
+accuracy for character:  b 1.0
+accuracy for character:  c 1.0
+accuracy for character:  d 1.0
+accuracy for character:  e 1.0
+accuracy for character:  g 0.625
+accuracy for character:  h 0.75
+accuracy for character:  l 0.8888888888888888
+accuracy for character:  m 1.0
+accuracy for character:  n 0.5
+accuracy for character:  o 0.8571428571428571
+accuracy for character:  p 1.0
+accuracy for character:  q 0.8
+accuracy for character:  r 1.0
+accuracy for character:  s 1.0
+accuracy for character:  u 0.8888888888888888
+accuracy for character:  v 0.4166666666666667
+accuracy for character:  w 1.0
+accuracy for character:  y 0.7692307692307693
+accuracy for character:  z 0.6666666666666666
 """
