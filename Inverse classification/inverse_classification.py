@@ -218,7 +218,7 @@ accuracy for character:  g 1.0
 accuracy for character:  h 0.9090909090909091
 accuracy for character:  l 0.9090909090909091
 accuracy for character:  m 1.0
-accuracy for character:  n 0.875
+accuracy for character:  n 0.875    
 accuracy for character:  o 0.625
 accuracy for character:  p 0.8333333333333334
 accuracy for character:  q 0.8888888888888888

@@ -283,10 +283,12 @@ def load_character_trajectories_cluster(pad_sequences=True,
             sequences_new.append(sequences_final[i])
 
     #show that only the select classes are represented
-    classes_final = np.array(classes_new)
-    sequences_final = np.array(sequences_new)
-    #print("classes: ", np.shape(classes_final))
-    #print("sequences: ", np.shape(sequences_final))
+    classes_all_chars = np.array(classes)
+    classes_all = np.array(classes_new)
+    sequences_all = np.array(sequences_new)
+    print("classes chars: ", np.shape((classes_all_chars)))
+    print("classes: ", np.shape(classes_all))
+    print("sequences: ", np.shape(sequences_all))
 
     #we cluster each character seperately
     #first we get all characters that belong to the same class
@@ -296,10 +298,10 @@ def load_character_trajectories_cluster(pad_sequences=True,
         all_letter_sequences = []
         one_hot_vector = np.zeros(num_classes)
         one_hot_vector[i] = 1
-        for j in range(len(classes_final)):
-            if np.array_equal(classes_final[j], one_hot_vector):
-                all_letter_classes.append(classes_final[j])
-                all_letter_sequences.append((sequences_final[j]))
+        for j in range(len(classes_all)):
+            if np.array_equal(classes_all[j], one_hot_vector):
+                all_letter_classes.append(classes_all[j])
+                all_letter_sequences.append((sequences_all[j]))
 
         #print("all_letter_classes: ", all_letter_classes)
         all_letter_classes = np.array(all_letter_classes)
@@ -352,18 +354,26 @@ def load_character_trajectories_cluster(pad_sequences=True,
 
     else:
         # since our data is ordered we need to split it in train and test split with shuffle True.
-        train_classes, test_classes, train_sequences, test_sequences = train_test_split(np.array(list_of_all_chars), sequences_final,
+        train_classes, test_classes, train_sequences, test_sequences = train_test_split(classes_all_chars,
+                                                                                        sequences_all,
                                                                                         test_size=test_size,
                                                                                         shuffle=shuffle)
+
+        train_classes, val_classes, train_sequences, val_sequences = train_test_split(train_classes,
+                                                                                      train_sequences,
+                                                                                      test_size=0.1,
+                                                                                      shuffle=shuffle)
 
         # print shapes of data:
         print("shape of X_train: ", np.shape(train_classes))
         print("shape of Y_train: ", np.shape(train_sequences))
+        print("shape of X_train: ", np.shape(val_classes))
+        print("shape of Y_train: ", np.shape(val_sequences))
         print("shape of X_test: ", np.shape(test_classes))
         print("shape of Y_test: ", np.shape(test_sequences))
 
         # save data in a file
-        all_data = np.array([train_classes, train_sequences, test_classes, test_sequences])
+        all_data = np.array([train_classes, train_sequences, val_classes, val_sequences, test_classes, test_sequences])
 
 
     #save dict as numpy file
@@ -374,10 +384,10 @@ if __name__ == '__main__':
 
     load_character_trajectories_cluster(num_classes=20,
                                         num_cluster=20,
-                                        test_size=0,
-                                        shuffle=False,
-                                        clustering=True,
-                                        centers_only=True,
-                                        filename='data/sequences_20_chars_per_class.npy',
-                                        dictionary=True
+                                        test_size=0.2,
+                                        shuffle=True,
+                                        clustering=False,
+                                        centers_only=False,
+                                        filename='data/sequences_comparison_class.npy',
+                                        dictionary=False
                                         )

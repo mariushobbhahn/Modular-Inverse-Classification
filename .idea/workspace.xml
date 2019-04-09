@@ -5,20 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19b2850d-00e9-4d4f-9cd9-b999229ba985" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/RNN/comparison_rnn.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/RNN/evaluate_inverse_classification.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Inverse classification/inverse_classification.py" beforeDir="false" afterPath="$PROJECT_DIR$/Inverse classification/inverse_classification.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNN/generative_RNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RNN/generative_RNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNN/modular_RNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/RNN/modular_RNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNN/test_stuff.py" beforeDir="false" afterPath="$PROJECT_DIR$/RNN/test_stuff.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RNN/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/RNN/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RNN/comparison_rnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/RNN/comparison_rnn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gans" beforeDir="false" afterPath="$PROJECT_DIR$/gans" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gans/2. DC-GAN PyTorch-MNIST.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gans/2. DC-GAN PyTorch-MNIST.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gans/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/gans/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/process_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/process_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types_z_3.png.npy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +24,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/process_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-105">
-              <caret line="348" column="9" selection-start-line="348" selection-start-column="9" selection-end-line="348" selection-end-column="9" />
+            <state relative-caret-position="439">
+              <caret line="375" column="89" selection-start-line="375" selection-start-column="89" selection-end-line="375" selection-end-column="89" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -43,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RNN/comparison_rnn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="470">
-              <caret line="211" lean-forward="true" selection-start-line="211" selection-end-line="211" />
+            <state relative-caret-position="-187">
+              <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -55,7 +48,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RNN/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1201">
+            <state relative-caret-position="2850">
               <caret line="178" column="7" selection-start-line="178" selection-start-column="7" selection-end-line="178" selection-end-column="7" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -65,12 +58,12 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/RNN/generative_RNN.py">
+        <entry file="file://$PROJECT_DIR$/process_data_handpicked.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="351">
-              <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
+            <state relative-caret-position="-258">
+              <caret line="130" column="22" selection-start-line="130" selection-start-column="22" selection-end-line="130" selection-end-column="22" />
               <folding>
-                <element signature="e#0#12#0" expanded="true" />
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,7 +72,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RNN/modular_RNN.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2278">
+            <state relative-caret-position="572">
               <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -91,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Inverse classification/inverse_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="234" column="79" selection-start-line="234" selection-start-column="79" selection-end-line="234" selection-end-column="79" />
+            <state relative-caret-position="374">
+              <caret line="220" column="36" selection-start-line="220" selection-start-column="36" selection-end-line="220" selection-end-column="36" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -103,7 +96,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RNN/test_stuff.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
+            <state relative-caret-position="850">
               <caret line="60" selection-start-line="60" selection-end-line="60" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -115,7 +108,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RNN/evaluate_inverse_classification.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
+            <state relative-caret-position="561">
               <caret line="315" column="38" selection-start-line="315" selection-start-column="38" selection-end-line="315" selection-end-column="38" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
@@ -179,9 +172,9 @@
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/RNN/modular_RNN.py" />
         <option value="$PROJECT_DIR$/RNN/train.py" />
-        <option value="$PROJECT_DIR$/process_data.py" />
         <option value="$PROJECT_DIR$/RNN/generative_RNN.py" />
         <option value="$PROJECT_DIR$/RNN/evaluate_inverse_classification.py" />
+        <option value="$PROJECT_DIR$/process_data.py" />
         <option value="$PROJECT_DIR$/RNN/comparison_rnn.py" />
         <option value="$PROJECT_DIR$/Inverse classification/inverse_classification.py" />
       </list>
@@ -235,6 +228,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/RNN/comparison_rnn.py" />
   </component>
   <component name="RunDashboard">
@@ -249,7 +243,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.evaluate_inverse_classification">
+  <component name="RunManager" selected="Python.comparison _classification">
     <configuration name="comparison _classification" type="PythonConfigurationType" factoryName="Python">
       <module name="Modular Inverse Classification" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -466,14 +460,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
+    <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33019853" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32925585" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -486,36 +481,27 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33019853" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295099" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3295099" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3295099" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-    </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Inverse classification/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/process_data_handpicked.py">
+    <entry file="file://$PROJECT_DIR$/RNN/generative_RNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2074">
-          <caret line="130" column="22" selection-start-line="130" selection-start-column="22" selection-end-line="130" selection-end-column="22" />
+        <state relative-caret-position="901">
+          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RNN/test_stuff.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -540,20 +526,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/process_data.py">
+    <entry file="file://$PROJECT_DIR$/process_data_handpicked.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105">
-          <caret line="348" column="9" selection-start-line="348" selection-start-column="9" selection-end-line="348" selection-end-column="9" />
+        <state relative-caret-position="-258">
+          <caret line="130" column="22" selection-start-line="130" selection-start-column="22" selection-end-line="130" selection-end-column="22" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/RNN/generative_RNN.py">
+    <entry file="file://$PROJECT_DIR$/RNN/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
+        <state relative-caret-position="2850">
+          <caret line="178" column="7" selection-start-line="178" selection-start-column="7" selection-end-line="178" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/process_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="375" column="89" selection-start-line="375" selection-start-column="89" selection-end-line="375" selection-end-column="89" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RNN/comparison_rnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-187">
+          <caret line="18" column="45" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
@@ -562,28 +568,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RNN/modular_RNN.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2278">
+        <state relative-caret-position="572">
           <caret line="134" column="22" selection-start-line="134" selection-start-column="22" selection-end-line="134" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RNN/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1201">
-          <caret line="178" column="7" selection-start-line="178" selection-start-column="7" selection-end-line="178" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RNN/test_stuff.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
@@ -592,18 +578,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RNN/evaluate_inverse_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
+        <state relative-caret-position="561">
           <caret line="315" column="38" selection-start-line="315" selection-start-column="38" selection-end-line="315" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/RNN/comparison_rnn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="470">
-          <caret line="211" lean-forward="true" selection-start-line="211" selection-end-line="211" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
@@ -612,8 +588,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Inverse classification/inverse_classification.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="234" column="79" selection-start-line="234" selection-start-column="79" selection-end-line="234" selection-end-column="79" />
+        <state relative-caret-position="374">
+          <caret line="220" column="36" selection-start-line="220" selection-start-column="36" selection-end-line="220" selection-end-column="36" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
