@@ -10,6 +10,8 @@ import argparse
 
 from generative_RNN import LSTMgen, LSTMclass
 from utils import plot_sequence
+from data.comparison_class import ComparisonData
+import torch.utils.data as data
 
 
 parser = argparse.ArgumentParser(
@@ -28,6 +30,7 @@ parser.add_argument('--noise_in', default=False, type=bool,
                     help='add noise to the first input')
 parser.add_argument('--noise_out', default=False, type=bool,
                     help='add noise on the entire target')
+parser.add_argument('--batch_size', default=16, type=int, help='batch size for training')
 parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 parser.add_argument('--noise_size_input', default=0.05, type=float,
@@ -67,15 +70,25 @@ def train(load_file,
     :param save_results:
     :return:
     """
+    load_file = '../data/sequences_comparison_class.npy'
+    my_data = np.load(load_file)
+    train_classes, train_sequences, val_classes, val_sequences, test_classes, test_sequences = my_data
 
-    print("weights name: ", weights_name)
-    data = np.load(load_file)
-    if many_samples:
-        train_classes, train_targets, val_classes, val_sequences, _ , _ = data
+    train_dataset = ComparisonData(classes=train_classes, sequences=train_sequences)
+    val_dataset = ComparisonData(classes=val_classes, sequences=val_sequences)
 
-    chars = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z']
+    train_loader = data.DataLoader(train_dataset, args.batch_size,
+                                  num_workers=4,
+                                  shuffle=True,
+                                  pin_memory=True)
 
-    model = LSTMclass(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers)
+    val_loader = data.DataLoader(val_dataset, args.batch_size,
+                                   num_workers=4,
+                                   shuffle=True,
+                                   pin_memory=True)
+
+    model = nn.DataParallel(LSTMclass(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers), dim=1).cuda()
+    #model = LSTMclass(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers).cuda()
     print("parameters: ", model.parameters)
 
     loss_function = nn.MSELoss()
@@ -85,58 +98,31 @@ def train(load_file,
 
     for epoch in range(num_epochs):
 
-        loss_sum = 0
-        for j in range(batch_size):
-            if many_samples:
-                rnd = np.random.randint(0, len(train_classes))
-                input = torch.Tensor(train_targets[rnd])
-                onehot = torch.zeros((1, len(chars)))
-                rnd_char = train_classes[rnd]
-                onehot[0][chars.index(rnd_char)] = 1
-                target = torch.Tensor(onehot)
-
-            else:
-                #randomly choose a character
-                rnd = np.random.randint(0, len(chars))
-                #get sequence as input
-                input_target_pairs = data.item().get(str(chars[rnd]))
-                rnd2 = np.random.randint(0, len(input_target_pairs))
-                input = torch.Tensor(input_target_pairs[rnd2][1])
-
-                #create one hot as target
-                onehot = torch.zeros((1, len(chars)))
-                onehot[0][rnd] = 1
-                target = torch.Tensor(onehot)
-                #print("target size: ", target.size())
+        for local_batch, local_labels in train_loader:
+            # Transfer to GPU
+            local_batch, local_labels = local_batch.cuda(), local_labels.cuda()
 
             optimizer.zero_grad()
-            out = model(input)
-            #print("out size: ", out.size())
-            sample_loss = loss_function(out, target)
-            loss_sum += sample_loss
+            out = model(local_batch, batch_size=len(local_batch))
+            batch_loss = loss_function(out, local_labels)
+            batch_loss.backward()
+            optimizer.step()
 
-        if (epoch != 0 and epoch % 100 == 0):
-            print("epoch: ", epoch, "\tloss: ", loss_sum, 'val_loss: ', val_loss, 'current best loss: ', current_best_val_loss)
-        loss_sum.backward()
-        optimizer.step()
+        for local_batch, local_labels in val_loader:
+            # Transfer to GPU
+            local_batch, local_labels = local_batch.cuda(), local_labels.cuda()
 
-        #validate current model
-        val_loss = 0
-        for k in range(len(val_classes)):
-            val_input = torch.Tensor(val_sequences[k])
-            onehot = torch.zeros((1, len(chars)))
-            val_char = val_classes[k]
-            onehot[0][chars.index(val_char)] = 1
-            val_target = torch.Tensor(onehot)
-
-            model.hidden = model.init_hidden()
-            val_out = model(val_input)
-            sample_loss = loss_function(val_out, val_target)
-            val_loss += sample_loss
+            optimizer.zero_grad()
+            out = model(local_batch, batch_size=len(local_batch))
+            val_loss = loss_function(out, local_labels)
 
         if args.save_best_only and val_loss < current_best_val_loss:
             current_best_val_loss = val_loss
             current_best_weights = model.state_dict()
+
+        if epoch != 0 and epoch % 100 == 0:
+            print("epoch: ", epoch, "\tbatch_loss: ", batch_loss, 'val_loss: ', val_loss, 'current best loss: ',  current_best_val_loss)
+
 
     if not args.save_best_only:
         current_best_weights = model.state_dict()

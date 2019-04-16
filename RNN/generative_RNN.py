@@ -64,7 +64,7 @@ class LSTMclass(nn.Module):
         self.num_layers = num_layers
 
         #define lstm cell
-        self.lstm = nn.LSTM(input_dim, hidden_size, self.num_layers)
+        self.lstm = nn.LSTM(input_dim, hidden_size, self.num_layers, batch_first=False)
 
         #define fully connected
         self.FC =  nn.Linear(hidden_size, output_dim)
@@ -73,25 +73,26 @@ class LSTMclass(nn.Module):
         #self.hidden = self.init_hidden()
 
 
-    def init_hidden(self, x = None):
+    def init_hidden(self, batch_size):
         # Before we've done anything, we dont have any hidden state.
         # Refer to the Pytorch documentation to see exactly
         # why they have this dimensionality.
         # The axes semantics are (num_layers, minibatch_size, hidden_dim)
-        if x == None:
-            return (Variable(torch.zeros(self.num_layers, 1, self.hidden_size)),
-                    Variable(torch.zeros(self.num_layers, 1, self.hidden_size)))
-        else:
-            return (Variable(x[0].data), Variable(x[1].data))
+        hidden_a = torch.randn(self.num_layers, batch_size, self.hidden_size).cuda()
+        hidden_b = torch.randn(self.num_layers, batch_size, self.hidden_size).cuda()
 
 
-    def forward(self, input):
+        return (Variable(hidden_a), Variable(hidden_b))
 
-        self.hidden = self.init_hidden()
+
+    def forward(self, input, batch_size):
+
+        self.hidden = self.init_hidden(batch_size=batch_size)
         #get lstm outputs
-        lstm_out, self.hidden = self.lstm(
-            input.view(len(input), 1, -1), self.hidden)
+        lstm_out, self.hidden = self.lstm(input.view(input.size(-2), batch_size, input.size(-1)), self.hidden)
 
+        # run through actual linear layer
         my_class = self.FC(lstm_out[-1])
+        my_class = my_class.view(batch_size, self.num_layers, -1)
         return my_class
 
