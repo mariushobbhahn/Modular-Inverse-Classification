@@ -5,6 +5,10 @@ import pickle
 import random
 from sklearn.model_selection import train_test_split
 from sklearn.cluster import KMeans
+from fastdtw import fastdtw
+from copy import deepcopy
+from scipy.spatial.distance import euclidean
+from math import isclose
 
 
 #pad the sequences with zeros such that all have the same length
@@ -159,6 +163,65 @@ def load_obj(name ):
     with open('data/' + name + '.pkl', 'rb') as f:
         return pickle.load(f)
 
+#write my own clustering algorithm with dtw instead of rmse as distance
+def Kmeans_dtw(data,
+               num_clusters,
+               centers_only=True
+               ):
+    #initialize centers randomly
+    n = len(data)
+    k = num_clusters
+    idx = random.sample(range(0, n), k)
+    distances = np.zeros((n, k))
+    data = np.reshape(data, newshape=(len(data), -1))    #need to have only one-dimensional timeseries
+    print("data shape: ", np.shape(data))
+    centers_old = data[idx]         #random initialization
+    centers_new = deepcopy(centers_old)
+
+    #iterate until convergence
+    error = float('Inf')
+    local_minimum = False
+    iter = 0
+    while error != 0 and not local_minimum and iter < 10:
+        previous_error = deepcopy(error)
+        iter += 1
+        print("iter: ", iter)
+        # Measure the distance to every center
+        for i in range(n):
+            for j in range(k):
+                distances[i, j], _ = fastdtw(data[i], centers_new[j], dist=euclidean)
+        # Assign all training data to closest center
+        clusters = np.argmin(distances, axis=1)
+        centers_old = deepcopy(centers_new)
+        for i in range(k):
+            centers_new[i] = np.mean(data[clusters == i], axis=0)
+        error = np.linalg.norm(centers_new - centers_old)
+        print("error: ", error, "previous error: ", previous_error)
+        if isclose(error, previous_error, abs_tol=1e-4):
+            local_minimum = True
+
+    if centers_only:
+        centers_new = np.reshape(centers_new, newshape=(num_clusters, 205, 2))
+        return(centers_new)
+    else:
+        return(clusters)
+
+#and the corresponding helper function
+def cluster_chars_dtw(sequences, num_clusters, centers_only=True, show_centers=True):
+    #IMPORTANT: the current version only supports centers only
+
+    centers = Kmeans_dtw(data=sequences, centers_only=centers_only, num_clusters=num_clusters)
+
+    if show_centers:
+        # show the different classes
+        plot_sequence(index=0, sequences=centers, swapaxis=True)
+        plot_sequence(index=1, sequences=centers, swapaxis=True)
+        plot_sequence(index=2, sequences=centers, swapaxis=True)
+        plot_sequence(index=3, sequences=centers, swapaxis=True)
+
+    return(centers)
+
+
 
 #main function:
 def load_character_trajectories_cluster(pad_sequences=True,
@@ -312,32 +375,37 @@ def load_character_trajectories_cluster(pad_sequences=True,
     print("characters: ", np.shape(characters)) #this is only the shape of the tuples
 
     #secondly, we cluster each letter individually
-    characters_clustered = [cluster_chars(sequences=tup[1], num_cluster=num_cluster, show_centers=False, centers_only=centers_only) for tup in characters]
-    #print("characters clustered: ", characters_clustered)
-    classes_clustered = []
-    sequences_final = []
-    for i in range(len(characters_clustered)):
-        tup = characters_clustered[i]
-        classes = list_of_chars[i]
-        sequences = tup[1]
-        classes_clustered.append(classes)
-        sequences_final.append(sequences)
+    characters_clustered = [cluster_chars_dtw(sequences=tup[1], num_clusters=num_cluster, show_centers=True, centers_only=centers_only) for tup in characters]
+    print("characters clustered: ", characters_clustered)
+    if dictionary and clustering:
+        dict_ = dict(zip(list_of_chars, characters_clustered))
 
-    # thirdly we try put all the tuples back together in one big array
-    print("classes_clustered: ", np.shape(classes_clustered))
-    print("sequences final: ", np.shape(sequences_final))
-    #classes_final = np.concatenate(classes_clustered_padded)
-    #sequences_final = np.concatenate(sequences_final)
-    #print("sequences final: ", np.shape(sequences_final))
+        all_data = dict_
+        print(dictionary)
 
-    classes_final = np.asarray(classes_clustered)
-    sequences_final = np.asarray(sequences_final)
+    else:
+        classes_clustered = []
+        sequences_final = []
+        for i in range(len(characters_clustered)):
+            tup = characters_clustered[i]
+            classes = list_of_chars[i]
+            sequences = tup[1]
+            classes_clustered.append(classes)
+            sequences_final.append(sequences)
+
+        # thirdly we try put all the tuples back together in one big array
+        print("classes_clustered: ", np.shape(classes_clustered))
+        print("sequences final: ", np.shape(sequences_final))
+        #classes_final = np.concatenate(classes_clustered_padded)
+        #sequences_final = np.concatenate(sequences_final)
+        #print("sequences final: ", np.shape(sequences_final))
+
+        classes_final = np.asarray(classes_clustered)
+        sequences_final = np.asarray(sequences_final)
 
 
     if centers_only:
         test_size=0
-
-
 
     if dictionary:
         # create a dictionary with letter to sequence mapping
@@ -383,11 +451,11 @@ def load_character_trajectories_cluster(pad_sequences=True,
 if __name__ == '__main__':
 
     load_character_trajectories_cluster(num_classes=20,
-                                        num_cluster=20,
+                                        num_cluster=4,
                                         test_size=0.2,
                                         shuffle=True,
-                                        clustering=False,
-                                        centers_only=False,
-                                        filename='data/sequences_comparison_class.npy',
-                                        dictionary=False
+                                        clustering=True,
+                                        centers_only=True,
+                                        filename='data/sequences_types_4_dtw.npy',
+                                        dictionary=True
                                         )
