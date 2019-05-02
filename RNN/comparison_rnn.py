@@ -1,15 +1,12 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
-from torch.distributions import normal
-from torch.autograd import Variable
 
 import numpy as np
 import argparse
 
-from generative_RNN import LSTMgen, LSTMclass
-from utils import plot_sequence
+from generative_RNN import LSTMclass
+#from data.comparison_class import ComparisonData
 from data.comparison_class import ComparisonData
 import torch.utils.data as data
 
@@ -18,7 +15,7 @@ parser = argparse.ArgumentParser(
     description='Modular Inverse Classification Training With Pytorch')
 
 train_set = parser.add_mutually_exclusive_group()
-parser.add_argument('--num_epochs', default=40000,
+parser.add_argument('--num_epochs', default=100000,
                     type=int, help='number of epochs used for training')
 parser.add_argument('--hidden_size', default=200,
                     type=int, help='number of epochs used for training')
@@ -30,7 +27,7 @@ parser.add_argument('--noise_in', default=False, type=bool,
                     help='add noise to the first input')
 parser.add_argument('--noise_out', default=False, type=bool,
                     help='add noise on the entire target')
-parser.add_argument('--batch_size', default=16, type=int, help='batch size for training')
+parser.add_argument('--batch_size', default=8, type=int, help='batch size for training')
 parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 parser.add_argument('--noise_size_input', default=0.05, type=float,
@@ -76,6 +73,7 @@ def train(load_file,
 
     train_dataset = ComparisonData(classes=train_classes, sequences=train_sequences)
     val_dataset = ComparisonData(classes=val_classes, sequences=val_sequences)
+    test_dataset = ComparisonData(classes=test_classes, sequences=test_sequences)
 
     train_loader = data.DataLoader(train_dataset, args.batch_size,
                                   num_workers=4,
@@ -92,11 +90,14 @@ def train(load_file,
     print("parameters: ", model.parameters)
 
     loss_function = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = optim.Adam(model.parameters(), lr=0.000005
+
+                           )
 
     current_best_val_loss = float('Inf')
 
     for epoch in range(num_epochs):
+        batch_loss_sum = 0
 
         for local_batch, local_labels in train_loader:
             # Transfer to GPU
@@ -108,6 +109,11 @@ def train(load_file,
             batch_loss.backward()
             optimizer.step()
 
+            batch_loss_sum += batch_loss
+
+
+        val_loss_sum = 0
+
         for local_batch, local_labels in val_loader:
             # Transfer to GPU
             local_batch, local_labels = local_batch.cuda(), local_labels.cuda()
@@ -115,47 +121,54 @@ def train(load_file,
             optimizer.zero_grad()
             out = model(local_batch, batch_size=len(local_batch))
             val_loss = loss_function(out, local_labels)
+            val_loss_sum += val_loss
 
-        if args.save_best_only and val_loss < current_best_val_loss:
-            current_best_val_loss = val_loss
+        if args.save_best_only and val_loss_sum < current_best_val_loss:
+            current_best_val_loss = val_loss_sum
             current_best_weights = model.state_dict()
 
         if epoch != 0 and epoch % 100 == 0:
-            print("epoch: ", epoch, "\tbatch_loss: ", batch_loss, 'val_loss: ', val_loss, 'current best loss: ',  current_best_val_loss)
+            print("epoch: ", epoch, "\tbatch_loss: ", batch_loss_sum, 'val_loss: ', val_loss_sum, 'current best loss: ',  current_best_val_loss)
 
 
     if not args.save_best_only:
         current_best_weights = model.state_dict()
 
-    torch.save(current_best_weights, 'weights/' + weights_name + '.pth')
+    best_weights_name='weights/' + weights_name + '.pth'
+    torch.save(current_best_weights, best_weights_name)
+    print("saving best weights at: ", best_weights_name)
     if show_results or save_results:
         with torch.no_grad():
-            if many_samples:
-                for i in range(len(train_classes)):
-                    input = torch.Tensor(train_targets[i])
-                    target = train_classes[i]
+            final_train_loss_sum = 0
+            false = []
 
-                    model.load_state_dict(current_best_weights)
-                    model.hidden = model.init_hidden()
-                    pred = model(input).data.numpy()[-1]
-                    pred_char = chars[np.argmax(pred)]
+            for local_batch, local_labels in train_loader:
+                # Transfer to GPU
+                local_batch, local_labels = local_batch.cuda(), local_labels.cuda()
 
-                    print("target char: ", target, "predicted char: ", pred_char)
+                out = model(local_batch, batch_size=len(local_batch))
+                final_train_loss = loss_function(out, local_labels)
+                zeros = torch.zeros_like(out)
+                zeros = zeros.view(zeros.size(0), zeros.size(-1))
+                maxs = torch.argmax(out, dim=2, keepdim=False)
+                one_hots = zeros.scatter_(dim=1, index=maxs, src=torch.tensor(1))
+                local_labels = local_labels.view(local_labels.size(0), local_labels.size(-1))
+                #this is a very lengthy and unnatural way to calculate the accuracy but I didnt find anything better
+                diff = one_hots - local_labels
+                diff = torch.abs(diff)
+                diff = torch.sum(diff, dim = 1) / 2
+                false.append(diff)
 
-            else:
-                # test the model
-                for c in chars:
-                    for j in range(len(data.item().get(str(c)))):
-                        input_target_pairs = data.item().get(str(c))
-                        input = torch.Tensor(input_target_pairs[j][1])
-                        target = c
-                        #load model and predict
-                        model.load_state_dict(current_best_weights)
-                        model.hidden = model.init_hidden()
-                        pred = model(input).data.numpy()[-1]
-                        pred_char = chars[np.argmax(pred)]
+                final_train_loss_sum += final_train_loss
 
-                        print("target char: ", target, "predicted char: ", pred_char)
+
+            false = torch.cat(false, dim=0)
+            print(len(false), torch.sum(false))
+            acc = 1 - torch.sum(false)/len(false)
+            print("training accuracy: ", acc)
+            print("training error: ", final_train_loss_sum)
+
+
 
 
 def test(load_file,
