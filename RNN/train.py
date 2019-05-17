@@ -27,15 +27,15 @@ parser.add_argument('--train_character', default='b', type=str,
                     help='determines which character you train the generative model on')
 parser.add_argument('--noise_in', default=False, type=bool,
                     help='add noise to the first input')
-parser.add_argument('--noise_out', default=True, type=bool,
+parser.add_argument('--noise_out', default=False, type=bool,
                     help='add noise on the entire target')
 parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 #parser.add_argument('--weights_name', default='rnn_z_10_noise_out00001_2c', type=str,
 #                    help='filename for weights')
-parser.add_argument('--noise_size_input', default=0.05, type=float,
+parser.add_argument('--noise_size_input', default=0.00, type=float,
                      help='determines the standard deviation of the noise added to the input')
-parser.add_argument('--noise_size_target', default=0.0003, type=float,
+parser.add_argument('--noise_size_target', default=0.0000, type=float,
                      help='determines the standard deviation of the noise added to the target')
 parser.add_argument('--num_chars_per_class', default=1, type=int,
                     help='determines the number of characters that a generative network was trained on')
@@ -68,6 +68,7 @@ def train_single(load_file,
     print("weights name: ", weights_name)
     data = np.load(load_file)
     input_target_pairs = data.item().get(str(character))
+    print(np.shape(input_target_pairs))
     zero_sequence = torch.zeros((205, input_dim))
 
     model = LSTMgen(input_dim=input_dim, hidden_size=hidden_size, output_dim=output_dim, num_layers=num_layers)
@@ -170,10 +171,10 @@ def train_multiple(char_list,
 if __name__ == '__main__':
 
 
-    WEIGHTS_NAME = str('rnn_types_{}_'  +   #.format(args.train_character) + '_' +
+    WEIGHTS_NAME = str('rnn_types_dtw_{}_'  +   #.format(args.train_character) + '_' +
                        'noise_in_{size}_'.format(size=str(args.noise_size_input) if args.noise_in else "0") +
-                       'noise_out_{size}_'.format(size=str(args.noise_size_target) if args.noise_out else "0") +
-                       'chars_{}'.format(args.num_chars_per_class)
+                       'noise_out_{size}_'.format(size=str(args.noise_size_target) if args.noise_out else "0")
+                       #'chars_{}'.format(args.num_chars_per_class)
                         )
 
     """
@@ -190,7 +191,7 @@ if __name__ == '__main__':
 
 
     #"""
-    train_multiple(load_file='../data/sequences_4_handpicked.npy',    #'../data/sequences_2_chars_per_class.npy',
+    train_multiple(load_file='../data/sequences_types_4_dtw.npy',
                  char_list=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z'],
                  weights_name=WEIGHTS_NAME,
                  num_epochs=args.num_epochs,

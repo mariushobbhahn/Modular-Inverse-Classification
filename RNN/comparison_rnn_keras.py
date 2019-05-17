@@ -13,24 +13,14 @@ types = False
 sparse = True
 dim = 20
 # load training and validation data
-(x_train, y_train), (x_test, y_test) = character_trajectories.load_data("../RNN/data/char_trajectories_{}x1_types_centers_only.pkl".format(dim))
+x_train, y_train, x_val, y_val, x_test, y_test = np.load("data/sequences_all_onehot.npy")
 
-"""remove the padding of the x_data"""
-x_train = x_train[:,0,:]
-x_test = x_test[:,0,:]
-
-if types or sparse:
-    """reduce the types to characters by taking the max along the axis"""
-    print("test sample before the type reduction: ", x_train[0])
-    x_train = np.amax(x_train, axis=2)
-    x_test = np.amax(x_test, axis=2)
-    print("test sample after type reduction: ", print(x_train[0]))
-
-
-print("x_train shape: " ,x_train.shape)
-print("y_train shape: " ,y_train.shape)
-print("x_test shape: " ,x_test.shape)
-print("y_test shape: " ,y_test.shape)
+print("x_train shape: " , np.shape(x_train))
+print("y_train shape: " , np.shape(y_train))
+print("x_val shape: " , np.shape(x_val))
+print("y_val shape: " , np.shape(y_val))
+print("x_test shape: " , np.shape(x_test))
+print("y_test shape: " , np.shape(y_test))
 
 
 # Get your input dimensions
@@ -44,7 +34,7 @@ print("output_dim: ", output_dim)
 
 
 RNN_FILE_MODEL = os.path.join(DIR_MODEL, "comparison_model_{}_sparse1_v{}.hdf5".format(dim,i))
-hidden_size = 205
+hidden_size = 200
 """create model"""
 rnn = Sequential()
 rnn.add(LSTM(hidden_size, return_sequences=False, input_shape=INPUT_SHAPE))
@@ -59,7 +49,7 @@ rnn.fit(x=y_train,
         epochs=10000,
         batch_size=10,
         shuffle=True,
-        validation_split=0.2,
+        validation_data=(y_val, x_val),
         callbacks=[checkpointer],
         verbose=0
         )
