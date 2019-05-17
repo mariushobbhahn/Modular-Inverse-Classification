@@ -1,6 +1,14 @@
 import torch
 import numpy as np
 
+import sys
+import os
+module_path = os.path.abspath(os.path.join('..'))
+RNN_path = os.path.abspath('/home/marius/Desktop/Modular Inverse Classification/RNN/')
+if module_path not in sys.path:
+    sys.path.append(module_path)
+sys.path.append(RNN_path)
+
 from RNN.generative_RNN import LSTMgen
 from RNN.modular_RNN import ModularRNN
 
@@ -112,7 +120,7 @@ if __name__ == '__main__':
     sequences_all = np.load('../data/sequences_all.npy')
 
     #model_name = '../RNN/weights/rnn_{}_10_noise_out00001_2c.pth'
-    model_name = '../RNN/weights/rnn_types_{}_noise_in_0.2_noise_out_0_chars_1.pth'
+    model_name = '../RNN/weights/rnn_types_dtw_{}_noise_in_0_noise_out_0_.pth'
     LoM = get_list_of_models(model_name=model_name,
                              chars=['a', 'b', 'c', 'd', 'e', 'g', 'h', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 'u', 'v', 'w', 'y', 'z'],
                              input_dim=4
