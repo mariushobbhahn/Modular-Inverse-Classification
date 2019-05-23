@@ -25,7 +25,7 @@ parser.add_argument('--num_layers', default=1, type=int,
                     help='number of layers for the LSTM')
 parser.add_argument('--train_character', default='b', type=str,
                     help='determines which character you train the generative model on')
-parser.add_argument('--noise_in', default=False, type=bool,
+parser.add_argument('--noise_in', default=True, type=bool,
                     help='add noise to the first input')
 parser.add_argument('--noise_out', default=False, type=bool,
                     help='add noise on the entire target')
@@ -33,7 +33,7 @@ parser.add_argument('--save_folder', default='weights/',
                     help='Directory for saving checkpoint models')
 #parser.add_argument('--weights_name', default='rnn_z_10_noise_out00001_2c', type=str,
 #                    help='filename for weights')
-parser.add_argument('--noise_size_input', default=0.00, type=float,
+parser.add_argument('--noise_size_input', default=0.1, type=float,
                      help='determines the standard deviation of the noise added to the input')
 parser.add_argument('--noise_size_target', default=0.0000, type=float,
                      help='determines the standard deviation of the noise added to the target')
