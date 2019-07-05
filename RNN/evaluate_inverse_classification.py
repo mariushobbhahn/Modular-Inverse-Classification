@@ -129,10 +129,10 @@ def evaluate_IC_unseen_test(data,
 
             filename = 'figures/eval_IC_unseen_{}_{}.png'.format(this_class, i)
             lom_idx = list_of_characters.index(this_class)
-            loss, pred_class = modRNN.inverse_classification_rnn(gen_net=LoM[lom_idx], target=this_target, iterations=0,
+            loss, pred_class = modRNN.inverse_classification_rnn(gen_net=LoM[lom_idx], target=this_target, iterations=50,
                                                                  save_plot=False, show_plot=False, filename=filename,
                                                                  verbose=False)
-            print("loss: ", loss, "pred_class: ", pred_class)
+            #print("loss: ", loss, "pred_class: ", pred_class)
 
             losses.append(loss)
 
@@ -205,9 +205,9 @@ def heat_map_for_cross_table(filename,
 if __name__ == '__main__':
 
 
-    load_file = '../data/sequences_4_handpicked.npy'
+    load_file = '../data/sequences_types_4_dtw.npy'
     load_file_test = '../data/sequences_20_chars_per_class.npy'
-    model_name = '../RNN/weights/rnn_types_{}_noise_in_0.1_noise_out_0.0001_chars_1.pth'
+    model_name = '../RNN/weights/rnn_types_dtw_{}_noise_in_0_noise_out_0_.pth'
 
     data = np.load(load_file)
     data_test = np.load(load_file_test)
@@ -314,5 +314,9 @@ model_name = '../RNN/weights/rnn_types_{}_noise_in_0.05_noise_out_0_chars_1.pth'
 model_name = '../RNN/weights/rnn_types_{}_noise_in_0.1_noise_out_0.0001_chars_1.pth'
 50 iterations: average loss:  0.1954365
 0 iterations: average loss:  0.3598676
+
+model_name = '../RNN/weights/rnn_types_dtw_{}_noise_in_0_noise_out_0_.pth'
+50 iterations: average loss:  average loss:  0.15475672
+0 iterations: average loss: 0.2849058
 
 """
