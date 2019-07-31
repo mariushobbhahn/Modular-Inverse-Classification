@@ -1,0 +1,56 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{MDAS18}
+
+\bibitem[BL13]{uci2013}
+K.~Bache and M.~Lichman.
+\newblock {UCI} machine learning repository, 2013.
+
+\bibitem[C{\etalchar{+}}15]{chollet2015keras}
+Fran\c{c}ois Chollet et~al.
+\newblock Keras.
+\newblock \url{https://keras.io}, 2015.
+
+\bibitem[Hob18]{HobbhahnBA2018}
+Marius Hobbhahn.
+\newblock Inverse classification using generative models.
+\newblock 2018.
+
+\bibitem[KB14]{AdamKingmaB14}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock {\em CoRR}, abs/1412.6980, 2014.
+
+\bibitem[LT17]{LatentVectors2017}
+Zachary~C. Lipton and Subarna Tripathi.
+\newblock Precise recovery of latent vectors from generative adversarial
+  networks.
+\newblock {\em CoRR}, abs/1702.04782, 2017.
+
+\bibitem[MDAS18]{REPRISE2018}
+{Martin V. Butz}, {David Bilkey}, {Alistair Knott}, and {Sebastian Otte}.
+\newblock {REPRISE: A Retrospective and Prospective Inference Scheme}.
+\newblock 2018.
+
+\bibitem[ORB19]{2019_icann_dynamics}
+Sebastian Otte, Patricia Rubisch, and Martin~V. Butz.
+\newblock Gradient-based learning of compositional dynamics with modular rnns.
+\newblock In {\em Artificial {Neural} {Networks} and {Machine} {Learning} --
+  {ICANN} 2019}, 2019.
+\newblock Accepted for publication.
+
+\bibitem[OSFB17]{RocketballOtte2017}
+Sebastian Otte, Theresa Schmitt, Karl Friston, and Martin~V. Butz.
+\newblock Inferring adaptive goal-directed behavior within recurrent neural
+  networks.
+\newblock In Alessandra Lintas, Stefano Rovetta, Paul~F.M.J. Verschure, and
+  Alessandro~E.P. Villa, editors, {\em Artificial Neural Networks and Machine
+  Learning -- ICANN 2017}, pages 227--235, Cham, 2017. Springer International
+  Publishing.
+
+\bibitem[PGC{\etalchar{+}}17]{Pytorch}
+Adam Paszke, Sam Gross, Soumith Chintala, Gregory Chanan, Edward Yang, Zachary
+  DeVito, Zeming Lin, Alban Desmaison, Luca Antiga, and Adam Lerer.
+\newblock Automatic differentiation in pytorch.
+\newblock 2017.
+
+\end{thebibliography}

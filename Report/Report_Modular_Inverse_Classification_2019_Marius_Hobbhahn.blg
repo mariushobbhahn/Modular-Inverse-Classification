@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2017/Debian)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: Report_Modular_Inverse_Classification_2019_Marius_Hobbhahn.aux
+The style file: alpha.bst
+Database file #1: bibliography.bib
+Warning--empty booktitle in HobbhahnBA2018
+Warning--empty booktitle in REPRISE2018
+Warning--empty journal in Pytorch
+You've used 9 entries,
+            2543 wiz_defined-function locations,
+            610 strings with 6169 characters,
+and the built_in function-call counts, 3697 in all, are:
+= -- 342
+> -- 245
+< -- 2
++ -- 86
+- -- 86
+* -- 252
+:= -- 642
+add.period$ -- 28
+call.type$ -- 9
+change.case$ -- 65
+chr.to.int$ -- 9
+cite$ -- 12
+duplicate$ -- 135
+empty$ -- 243
+format.name$ -- 94
+if$ -- 738
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 7
+newline$ -- 49
+num.names$ -- 29
+pop$ -- 79
+preamble$ -- 1
+purify$ -- 74
+quote$ -- 0
+skip$ -- 124
+stack$ -- 0
+substring$ -- 95
+swap$ -- 18
+text.length$ -- 2
+text.prefix$ -- 1
+top$ -- 0
+type$ -- 72
+warning$ -- 3
+while$ -- 30
+width$ -- 11
+write$ -- 113
+(There were 3 warnings)

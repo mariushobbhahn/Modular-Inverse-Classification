@@ -16,26 +16,113 @@
 \gdef\HyperFirstAtBeginDocument#1{#1}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Submission of papers to NeurIPS 2018}{1}{section.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Style}{1}{subsection.1.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Retrieval of style files}{1}{subsection.1.2}}
-\@writefile{toc}{\contentsline {paragraph}{New preprint option for 2018}{2}{section*.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}General formatting instructions}{2}{section.2}}
-\newlabel{gen_inst}{{2}{2}{General formatting instructions}{section.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Headings: first level}{2}{section.3}}
-\newlabel{headings}{{3}{2}{Headings: first level}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Headings: second level}{2}{subsection.3.1}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Headings: third level}{2}{subsubsection.3.1.1}}
-\@writefile{toc}{\contentsline {paragraph}{Paragraphs}{2}{section*.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Citations, figures, tables, references}{2}{section.4}}
-\newlabel{others}{{4}{2}{Citations, figures, tables, references}{section.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Sample figure caption.}}{3}{figure.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Citations within the text}{3}{subsection.4.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Footnotes}{3}{subsection.4.2}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Figures}{3}{subsection.4.3}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Sample table title}}{4}{table.1}}
-\newlabel{sample-table}{{1}{4}{Sample table title}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Tables}{4}{subsection.4.4}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Final instructions}{4}{section.5}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Preparing PDF files}{4}{section.6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Margins in \LaTeX  {}}{5}{subsection.6.1}}
+\citation{RocketballOtte2017}
+\citation{REPRISE2018}
+\citation{HobbhahnBA2018}
+\citation{HobbhahnBA2018}
+\citation{2019_icann_dynamics}
+\citation{LatentVectors2017}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Inverse Classification using Generative Models}{2}{section.2}}
+\newlabel{sec:ICGM}{{2}{2}{Inverse Classification using Generative Models}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Sequence Generation}{2}{subsection.2.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Depiction of the sequence generation.\relax }}{2}{figure.caption.1}}
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:generative_model}{{1}{2}{Depiction of the sequence generation.\relax }{figure.caption.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Inverse Classification}{2}{subsection.2.2}}
+\citation{uci2013}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Depiction of the inverse classification. The generative network (in this case a RNN) reconstructs the character by using the temporal gradient information until it converges to a vector. A possible classification vector is represented in the left\relax }}{3}{figure.caption.2}}
+\newlabel{fig:inverse_classification}{{2}{3}{Depiction of the inverse classification. The generative network (in this case a RNN) reconstructs the character by using the temporal gradient information until it converges to a vector. A possible classification vector is represented in the left\relax }{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Extension to Modular Approach}{3}{subsection.2.3}}
+\newlabel{subsec:extension_to_MC}{{2.3}{3}{Extension to Modular Approach}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Experiments}{3}{section.3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Data}{3}{subsection.3.1}}
+\newlabel{subsec:data}{{3.1}{3}{Data}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}UCI Character Sequences}{3}{subsubsection.3.1.1}}
+\citation{AdamKingmaB14}
+\citation{Pytorch}
+\citation{chollet2015keras}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Depiction of the modular inverse classification. In the top row is a depiction of the character we want to classify. Every individual generative network in the bottom row tries to reconstruct this character by inverse classification. The resulting reconstructions, shown in the third row, is now compared to the to be classified character. The reconstruction with the lowest error is chosen as the winner.\relax }}{4}{figure.caption.3}}
+\newlabel{fig:modular_inverse_classification}{{3}{4}{Depiction of the modular inverse classification. In the top row is a depiction of the character we want to classify. Every individual generative network in the bottom row tries to reconstruct this character by inverse classification. The resulting reconstructions, shown in the third row, is now compared to the to be classified character. The reconstruction with the lowest error is chosen as the winner.\relax }{figure.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces On the left the character 'u' and on the right the character 'w' is depicted as they are found in the data set. Since they are rather similar in look the network might have additional difficulties separating them accordingly.\relax }}{4}{figure.caption.4}}
+\newlabel{fig:hard_characters}{{4}{4}{On the left the character 'u' and on the right the character 'w' is depicted as they are found in the data set. Since they are rather similar in look the network might have additional difficulties separating them accordingly.\relax }{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{4}{subfigure.4.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{4}{subfigure.4.2}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}(sequential) MNIST}{4}{subsubsection.3.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Setup of the Networks}{5}{subsection.3.2}}
+\newlabel{subsec:setup}{{3.2}{5}{Setup of the Networks}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Reconstruction of previously unseen Patterns}{5}{subsection.3.3}}
+\newlabel{subsec:reconstruction}{{3.3}{5}{Reconstruction of previously unseen Patterns}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Classification of previously unseen Data}{5}{subsection.3.4}}
+\newlabel{subsec:classification}{{3.4}{5}{Classification of previously unseen Data}{subsection.3.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Reconstruction of previously unseen (sequential) MNIST images. In the upper row are the four samples the networks has been trained on. In the second row are the test targets the network is supposed to reconstruct and in the third row are said reconstructions with the respective final gradients. From this comparison it is clear that the network is able to reconstruct images that it has never seen during training through gradient information.\relax }}{6}{figure.caption.5}}
+\newlabel{fig:unseen_fit_MNIST}{{5}{6}{Reconstruction of previously unseen (sequential) MNIST images. In the upper row are the four samples the networks has been trained on. In the second row are the test targets the network is supposed to reconstruct and in the third row are said reconstructions with the respective final gradients. From this comparison it is clear that the network is able to reconstruct images that it has never seen during training through gradient information.\relax }{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Modular Approach}{6}{subsection.3.5}}
+\newlabel{subsec:modular}{{3.5}{6}{Modular Approach}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Clustered versus Random Training Samples}{6}{subsubsection.3.5.1}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Addition of Noise on input and output}{6}{subsubsection.3.5.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Reconstruction of previously unseen handwritten character sequences. In the upper row are the four samples the networks has been trained on. In the second row are the test targets the network is supposed to reconstruct and in the third row are said reconstructions with the respective final gradients. From this comparison it is clear that the network is able to reconstruct sequences that it has never seen during training through gradient information.\relax }}{7}{figure.caption.6}}
+\newlabel{fig:unseen_fit_chars}{{6}{7}{Reconstruction of previously unseen handwritten character sequences. In the upper row are the four samples the networks has been trained on. In the second row are the test targets the network is supposed to reconstruct and in the third row are said reconstructions with the respective final gradients. From this comparison it is clear that the network is able to reconstruct sequences that it has never seen during training through gradient information.\relax }{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Distinction between Modular Approach with and without Inverse classification}{7}{subsubsection.3.5.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Heat map of the loss for character sequences and MNIST dataset for train and test data. Each heat map is constructed by taking the average loss of the reconstruction of a data point and the true data point for all models and all data points. a) character sequences train data b) character sequences test data c) MNIST train data d) MNIST test data\relax }}{8}{figure.caption.7}}
+\newlabel{fig:heatmaps}{{7}{8}{Heat map of the loss for character sequences and MNIST dataset for train and test data. Each heat map is constructed by taking the average loss of the reconstruction of a data point and the true data point for all models and all data points. a) character sequences train data b) character sequences test data c) MNIST train data d) MNIST test data\relax }{figure.caption.7}{}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{8}{subfigure.7.1}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{8}{subfigure.7.2}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(c)}{\ignorespaces {}}}{8}{subfigure.7.3}}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(d)}{\ignorespaces {}}}{8}{subfigure.7.4}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.4}Comparison to Forward Classification}{8}{subsubsection.3.5.4}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results for Modular Inverse Classification}{8}{section.4}}
+\newlabel{sec:results}{{4}{8}{Results for Modular Inverse Classification}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Clustered vs Random Training Samples}{9}{subsection.4.1}}
+\newlabel{subsec:clustered_vs_random_results}{{4.1}{9}{Clustered vs Random Training Samples}{subsection.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Accuracies of models without the addition of any noise to the input or output. In both the MNIST and characters dataset the clustered version achieves better results than the random one.\relax }}{9}{table.caption.8}}
+\newlabel{table:clustered_vs_random_results}{{1}{9}{Accuracies of models without the addition of any noise to the input or output. In both the MNIST and characters dataset the clustered version achieves better results than the random one.\relax }{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Addition of Noise to input and output}{9}{subsection.4.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Results for the addition of noise experiment for the MNIST clustered dataset. On the left the addition of noise on in- and output is shown. On the right the overall and individual accuracy for all numbers is given. The model with input noise with std. of 0.2 and output noise of 0.1 has the highest overall accuracy.\relax }}{9}{table.caption.9}}
+\newlabel{table:MNIST_clustered_results}{{2}{9}{Results for the addition of noise experiment for the MNIST clustered dataset. On the left the addition of noise on in- and output is shown. On the right the overall and individual accuracy for all numbers is given. The model with input noise with std. of 0.2 and output noise of 0.1 has the highest overall accuracy.\relax }{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Distinction between Modular Approach with 0 and 50 iterations}{9}{subsubsection.4.2.1}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces GLM for the MNIST clustered noise experiments. The coefficients for the input noise are positive, indicating a positive effect. Output noise seems beneficial when only a small amount is added.\relax }}{10}{table.caption.10}}
+\newlabel{table:MNIST_clustered_GLM}{{3}{10}{GLM for the MNIST clustered noise experiments. The coefficients for the input noise are positive, indicating a positive effect. Output noise seems beneficial when only a small amount is added.\relax }{table.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Results for the comparison of MIC with 0 and 50 iterations. For all four datasets MIC is compared with 0 and 50 iterations of gradient updates. For all datasets the results for the base model and for the model with overall best accuracy for 50 iterations is shown. The values for the accuracy best column for 0 iterations are chosen from the model with the highest accuracy from 50 iterations. In all cases doing inverse classification for 50 iterations yields significantly better results than with 0 iterations.\relax }}{10}{table.caption.11}}
+\newlabel{table:modular_vs_MIC}{{4}{10}{Results for the comparison of MIC with 0 and 50 iterations. For all four datasets MIC is compared with 0 and 50 iterations of gradient updates. For all datasets the results for the base model and for the model with overall best accuracy for 50 iterations is shown. The values for the accuracy best column for 0 iterations are chosen from the model with the highest accuracy from 50 iterations. In all cases doing inverse classification for 50 iterations yields significantly better results than with 0 iterations.\relax }{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Comparison to Forward Classification}{10}{subsubsection.4.2.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Results for the conventional forward models. The models have been trained on the random and clustered subsets for MNIST and character sequences respectively and additionally for the entirety of the dataset. The model trained on all data outperforms the others in both cases. The model trained on the clustered samples is better for MNIST but not for the character sequences.\relax }}{11}{table.caption.12}}
+\newlabel{table:forward_comparison}{{5}{11}{Results for the conventional forward models. The models have been trained on the random and clustered subsets for MNIST and character sequences respectively and additionally for the entirety of the dataset. The model trained on all data outperforms the others in both cases. The model trained on the clustered samples is better for MNIST but not for the character sequences.\relax }{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{11}{section.5}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of all results. For both datasets the results for MIC without noise (base) with noise (best) and a conventional forward classification model (forward) are compared. In all cases the MIC outperforms the forward model and is improved by the addition of noise to in and output. MIC is not able to beat a forward model trained on the entirety of the dataset.\relax }}{11}{table.caption.13}}
+\newlabel{table:final_comparison}{{6}{11}{Comparison of all results. For both datasets the results for MIC without noise (base) with noise (best) and a conventional forward classification model (forward) are compared. In all cases the MIC outperforms the forward model and is improved by the addition of noise to in and output. MIC is not able to beat a forward model trained on the entirety of the dataset.\relax }{table.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Limitations}{11}{subsection.5.1}}
+\citation{REPRISE2018}
+\bibstyle{alpha}
+\bibdata{bibliography}
+\bibcite{uci2013}{{BL13}{}{{}}{{}}}
+\bibcite{chollet2015keras}{{C{$^{+}$}15}{}{{}}{{}}}
+\bibcite{HobbhahnBA2018}{{Hob18}{}{{}}{{}}}
+\bibcite{AdamKingmaB14}{{KB14}{}{{}}{{}}}
+\bibcite{LatentVectors2017}{{LT17}{}{{}}{{}}}
+\bibcite{REPRISE2018}{{MDAS18}{}{{}}{{}}}
+\bibcite{2019_icann_dynamics}{{ORB19}{}{{}}{{}}}
+\bibcite{RocketballOtte2017}{{OSFB17}{}{{}}{{}}}
+\bibcite{Pytorch}{{PGC{$^{+}$}17}{}{{}}{{}}}
+\providecommand\NAT@force@numbers{}\NAT@force@numbers
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Future Outlook}{12}{subsection.5.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Noise on input and output - Appendix}{12}{subsection.5.3}}
+\newlabel{subsec:results_noise_appendix}{{5.3}{12}{Noise on input and output - Appendix}{subsection.5.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}GLMs}{12}{subsection.5.4}}
+\newlabel{subsec:GLMs}{{5.4}{12}{GLMs}{subsection.5.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Distinction between Modular Approach with and without Inverse classification - Appendix}{12}{subsection.5.5}}
+\newlabel{subsec:MIC_vs_modular_appendix}{{5.5}{12}{Distinction between Modular Approach with and without Inverse classification - Appendix}{subsection.5.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Results for the noise experiments for the MNIST random dataset. The overall accuracies and individual accuracies for every number are depicted for all levels of additional noise.\relax }}{13}{table.caption.16}}
+\newlabel{table:MNIST_random_results}{{7}{13}{Results for the noise experiments for the MNIST random dataset. The overall accuracies and individual accuracies for every number are depicted for all levels of additional noise.\relax }{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Results for the noise experiments for the clustered characters dataset. The overall accuracies and individual accuracies for every character are depicted for all levels of additional noise.\relax }}{13}{table.caption.17}}
+\newlabel{table:chars_clustered_results}{{8}{13}{Results for the noise experiments for the clustered characters dataset. The overall accuracies and individual accuracies for every character are depicted for all levels of additional noise.\relax }{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Results for the noise experiments for the random characters dataset. The overall accuracies and individual accuracies for every character are depicted for all levels of additional noise.\relax }}{13}{table.caption.18}}
+\newlabel{table:chars_random_results}{{9}{13}{Results for the noise experiments for the random characters dataset. The overall accuracies and individual accuracies for every character are depicted for all levels of additional noise.\relax }{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces GLM of the MIC models with the random MNIST subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not to show any effect at all.\relax }}{13}{table.caption.19}}
+\newlabel{table:MNIST_random_GLM}{{10}{13}{GLM of the MIC models with the random MNIST subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not to show any effect at all.\relax }{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces GLM of the MIC models with the clustered character subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not, it even shows negative coefficients.\relax }}{14}{table.caption.20}}
+\newlabel{table:Chars_dtw_GLM}{{11}{14}{GLM of the MIC models with the clustered character subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not, it even shows negative coefficients.\relax }{table.caption.20}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces GLM of the MIC models with the random character subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not.\relax }}{14}{table.caption.21}}
+\newlabel{table:Chars_random_GLM}{{12}{14}{GLM of the MIC models with the random character subset. Effects of noise on input and output are tested. Effects on input have a positive tendency, noise on output does not.\relax }{table.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Full table of MIC with 0 and 50 iterations comparisons. In the left two columns the noise on input and output are depicted. On the two middle columns the accuracies for 0 and 50 iterations are shown respectively. In the right two columns the mean squared error (MSE) for the same comparison is shown.\relax }}{15}{table.caption.22}}
+\newlabel{table:MIC_0_vs_50_all}{{13}{15}{Full table of MIC with 0 and 50 iterations comparisons. In the left two columns the noise on input and output are depicted. On the two middle columns the accuracies for 0 and 50 iterations are shown respectively. In the right two columns the mean squared error (MSE) for the same comparison is shown.\relax }{table.caption.22}{}}
